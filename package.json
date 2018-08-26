@@ -1,0 +1,26 @@
+{
+  "name": "jw-contact-form",
+  "version": "1.0.0",
+  "description": "Simple Contact Form Plugin for Wordpress",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joewebber/jw-contact-form.git"
+  },
+  "author": "Joe Webber",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/joewebber/jw-contact-form/issues"
+  },
+  "homepage": "https://github.com/joewebber/jw-contact-form#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.1"
+  }
+}
