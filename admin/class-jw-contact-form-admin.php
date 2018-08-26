@@ -100,4 +100,40 @@ class Jw_Contact_Form_Admin {
 
 	}
 
+	/**
+     * Register Dashboard Page
+     *
+     * This function adds the main menu item
+     *
+	 * @since    1.0.0
+     */
+    public function register_dashboard_page() {
+
+    	// Add menu page using Wordpress function
+        add_menu_page(
+            __( 'JW Contact Form', $this->plugin_name ),
+            __( 'JW Contact Form', $this->plugin_name ),
+            'read',
+            'jw-contact-form-dashboard',
+            array( $this, 'include_dashboard_partial' ),
+            'dashicons-wordpress-alt',
+            9999
+        );
+
+    }
+
+    /**
+     * Include Dashboard Partial
+     *
+     * This function includes the dashboard view
+     *
+	 * @since    1.0.0
+     */
+    public function include_dashboard_partial() {
+
+    	// Include the view
+        include_once( plugin_dir_path( __FILE__ ) . 'partials/jw-contact-form-dashboard.php' );
+
+    }
+
 }
