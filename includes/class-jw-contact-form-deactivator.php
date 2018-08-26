@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * Fired during plugin deactivation
+ *
+ * @link       http://joewebber.co.uk
+ * @since      1.0.0
+ *
+ * @package    Jw_Contact_Form
+ * @subpackage Jw_Contact_Form/includes
+ */
+
+/**
+ * Fired during plugin deactivation.
+ *
+ * This class defines all code necessary to run during the plugin's deactivation.
+ *
+ * @since      1.0.0
+ * @package    Jw_Contact_Form
+ * @subpackage Jw_Contact_Form/includes
+ * @author     Joe Webber <signup@joewebber.co.uk>
+ */
+class Jw_Contact_Form_Deactivator {
+
+	/**
+	 * Short Description. (use period)
+	 *
+	 * Long Description.
+	 *
+	 * @since    1.0.0
+	 */
+	public static function deactivate() {
+
+	}
+
+}
