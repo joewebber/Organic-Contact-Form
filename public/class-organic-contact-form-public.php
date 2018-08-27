@@ -67,6 +67,14 @@ class Organic_Contact_Form_Public {
 		// Set the db prefix
 		$this->db_prefix = $db_prefix;
 
+		// If the form has been posted, and the data is there
+		if ( isset( $_POST['organic_form_fields'] ) && !empty( $_POST['organic_form_fields'] ) ) {
+
+			// Save the submission
+			$this->save_submission( $_POST['organic_form_fields'] );
+
+		}
+
 	}
 
 	/**
@@ -158,6 +166,49 @@ class Organic_Contact_Form_Public {
 
 		// Return the fields
 		return $fields;
+
+    }
+
+    /**
+     * Saves user submission
+     *
+     * Validates and stores the data into the database
+     *
+	 * @since    1.0.0
+	 * @param   $data array An array of the form data
+     */
+    private function save_submission( $data ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Use the Wordpress global
+		global $wp;
+
+		// Save the submission
+		$wpdb->insert( $this->db_prefix . '_submissions',
+			array(
+				'created' 	=> date( 'Y-m-d H:i:s' ),
+				'url' 		=> home_url( add_query_arg( $_GET, $wp->request ) )
+			)
+		);
+
+		// Get submission id
+		$submission_id = $wpdb->insert_id;
+
+		// Loop through the form data
+		foreach( $data as $form_field_id => $value ) {
+
+			// Save the field / value
+			$wpdb->insert( $this->db_prefix . '_submissions_fields',
+				array(
+					'submission_id' 	=> $submission_id,
+					'form_field_id' 	=> $form_field_id,
+					'value'				=> $value
+				)
+			);
+
+		}
 
     }
 
