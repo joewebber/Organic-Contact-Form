@@ -41,16 +41,31 @@ class Organic_Contact_Form_Public {
 	private $version;
 
 	/**
+	 * The database prefix for the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $db_prefix    The database prefix for the plugin.
+	 */
+	private $db_prefix;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $db_prefix ) {
 
+		// Set the plugin name
 		$this->plugin_name = $plugin_name;
+
+		// Set the plugin version
 		$this->version = $version;
+
+		// Set the db prefix
+		$this->db_prefix = $db_prefix;
 
 	}
 
@@ -99,5 +114,51 @@ class Organic_Contact_Form_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+	/**
+     * Include Form Partial
+     *
+     * This function includes contact form view
+     * As the shortcode requires a return value, the html is stored in a variable and returned
+     *
+	 * @since    1.0.0
+	 * @return   $html string The HTML form output
+     */
+    public function include_form_partial() {
+
+    	// Get the form fields
+    	$fields = $this->get_fields();
+
+    	// Include the file that generates the html
+        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-form.php' );
+
+        // Return the html for the form
+        return $html;
+
+    }
+
+    /**
+     * Get Form Fields
+     *
+     * Retrieves the fields from the database and returns them
+     *
+	 * @since    1.0.0
+	 * @return   $fields array An array of the form fields
+     */
+    private function get_fields() {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the fields
+		$sql = "SELECT * FROM " . $this->db_prefix . "_fields";
+
+		// Run the query to get the fields
+		$fields = $wpdb->get_results( $sql, OBJECT );
+
+		// Return the fields
+		return $fields;
+
+    }
 
 }

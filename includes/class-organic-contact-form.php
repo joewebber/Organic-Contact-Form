@@ -58,6 +58,15 @@ class Organic_Contact_Form {
 	protected $version;
 
 	/**
+	 * The database prefix for the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $db_prefix    The database prefix for the plugin.
+	 */
+	protected $db_prefix;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -67,16 +76,39 @@ class Organic_Contact_Form {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
-		} else {
+
+		// Use the Wordpress database global (required to get database prefix)
+		global $wpdb;
+
+		// If the plugin version is defined
+		if ( defined( 'ORGANIC_CONTACT_FORM_VERSION' ) ) {
+
+			// Set the variable to the defined version
+			$this->version = ORGANIC_CONTACT_FORM_VERSION;
+
+		} else { // Else not defined
+
+			// Set version to 1.0.0
 			$this->version = '1.0.0';
+
 		}
+
+		// Set the plugin name
 		$this->plugin_name = 'organic-contact-form';
 
+		// Set the plugin db prefix
+		$this->db_prefix = $wpdb->prefix . 'organic_contact_form';
+
+		// Load dependencies
 		$this->load_dependencies();
+
+		// Set locale
 		$this->set_locale();
+
+		// Define admin hooks
 		$this->define_admin_hooks();
+
+		// Define public hooks
 		$this->define_public_hooks();
 
 	}
@@ -152,7 +184,7 @@ class Organic_Contact_Form {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Organic_Contact_Form_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Organic_Contact_Form_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_db_prefix() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -171,10 +203,13 @@ class Organic_Contact_Form {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Organic_Contact_Form_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Organic_Contact_Form_Public( $this->get_plugin_name(), $this->get_version(), $this->get_db_prefix() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+		// Add shortcode to show the form
+		$this->loader->add_shortcode( 'organic-contact-form', $plugin_public, 'include_form_partial' );
 
 	}
 
@@ -216,6 +251,16 @@ class Organic_Contact_Form {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Retrieve the database prefix of the plugin.
+	 *
+	 * @since     1.0.0
+	 * @return    string    The database prefix of the plugin.
+	 */
+	public function get_db_prefix() {
+		return $this->db_prefix;
 	}
 
 }
