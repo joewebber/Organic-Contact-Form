@@ -32,6 +32,17 @@ class Organic_Contact_Form_Admin {
 	private $plugin_name;
 
 	/**
+	 * The title of this plugin.
+	 *
+	 * Used for display purposes only
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $plugin_title    The title of this plugin.
+	 */
+	private $plugin_title;
+
+	/**
 	 * The version of this plugin.
 	 *
 	 * @since    1.0.0
@@ -49,8 +60,14 @@ class Organic_Contact_Form_Admin {
 	 */
 	public function __construct( $plugin_name, $version ) {
 
+		// Set plugin name
 		$this->plugin_name = $plugin_name;
+
+		// Set plugin version
 		$this->version = $version;
+
+		// Set plugin title
+		$this->plugin_title = ucwords(str_replace('-', ' ', $plugin_name));
 
 	}
 
@@ -73,7 +90,7 @@ class Organic_Contact_Form_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/organic-contact-form-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +113,7 @@ class Organic_Contact_Form_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/organic-contact-form-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 

@@ -1,3 +1,9 @@
-<div class="wrap">
-	<h2>Organic Contact Form</h2>
+<div class="wrap organic-contact-form">
+
+	<header>
+
+		<h1><?php echo $this->plugin_title; ?></h1>
+
+	</header>
+
 </div>
