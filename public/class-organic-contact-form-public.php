@@ -6,8 +6,8 @@
  * @link       http://joewebber.co.uk
  * @since      1.0.0
  *
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/public
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/public
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/public
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/public
  * @author     Joe Webber <signup@joewebber.co.uk>
  */
-class Jw_Contact_Form_Public {
+class Organic_Contact_Form_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Jw_Contact_Form_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Jw_Contact_Form_Loader as all of the hooks are defined
+		 * defined in Organic_Contact_Form_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Jw_Contact_Form_Loader will then create the relationship
+		 * The Organic_Contact_Form_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/jw-contact-form-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/organic-contact-form-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class Jw_Contact_Form_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Jw_Contact_Form_Loader as all of the hooks are defined
+		 * defined in Organic_Contact_Form_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Jw_Contact_Form_Loader will then create the relationship
+		 * The Organic_Contact_Form_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jw-contact-form-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/organic-contact-form-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 

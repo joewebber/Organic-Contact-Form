@@ -9,8 +9,8 @@
  * @link       http://joewebber.co.uk
  * @since      1.0.0
  *
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/includes
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/includes
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/includes
  * @author     Joe Webber <signup@joewebber.co.uk>
  */
-class Jw_Contact_Form {
+class Organic_Contact_Form {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Jw_Contact_Form {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Jw_Contact_Form_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Organic_Contact_Form_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -72,7 +72,7 @@ class Jw_Contact_Form {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'jw-contact-form';
+		$this->plugin_name = 'organic-contact-form';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -86,10 +86,10 @@ class Jw_Contact_Form {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Jw_Contact_Form_Loader. Orchestrates the hooks of the plugin.
-	 * - Jw_Contact_Form_i18n. Defines internationalization functionality.
-	 * - Jw_Contact_Form_Admin. Defines all hooks for the admin area.
-	 * - Jw_Contact_Form_Public. Defines all hooks for the public side of the site.
+	 * - Organic_Contact_Form_Loader. Orchestrates the hooks of the plugin.
+	 * - Organic_Contact_Form_i18n. Defines internationalization functionality.
+	 * - Organic_Contact_Form_Admin. Defines all hooks for the admin area.
+	 * - Organic_Contact_Form_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,33 +103,33 @@ class Jw_Contact_Form {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-jw-contact-form-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-organic-contact-form-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-jw-contact-form-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-organic-contact-form-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-jw-contact-form-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-organic-contact-form-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-jw-contact-form-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-organic-contact-form-public.php';
 
-		$this->loader = new Jw_Contact_Form_Loader();
+		$this->loader = new Organic_Contact_Form_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Jw_Contact_Form_i18n class in order to set the domain and to register the hook
+	 * Uses the Organic_Contact_Form_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Jw_Contact_Form {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Jw_Contact_Form_i18n();
+		$plugin_i18n = new Organic_Contact_Form_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,7 +152,7 @@ class Jw_Contact_Form {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Jw_Contact_Form_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Organic_Contact_Form_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -171,7 +171,7 @@ class Jw_Contact_Form {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Jw_Contact_Form_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Organic_Contact_Form_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -202,7 +202,7 @@ class Jw_Contact_Form {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Jw_Contact_Form_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Organic_Contact_Form_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

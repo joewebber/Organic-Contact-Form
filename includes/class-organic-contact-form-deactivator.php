@@ -6,8 +6,8 @@
  * @link       http://joewebber.co.uk
  * @since      1.0.0
  *
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/includes
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/includes
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/includes
  * @author     Joe Webber <signup@joewebber.co.uk>
  */
-class Jw_Contact_Form_Deactivator {
+class Organic_Contact_Form_Deactivator {
 
 	/**
 	 * Short Description. (use period)

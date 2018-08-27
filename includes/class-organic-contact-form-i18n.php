@@ -9,8 +9,8 @@
  * @link       http://joewebber.co.uk
  * @since      1.0.0
  *
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/includes
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Jw_Contact_Form
- * @subpackage Jw_Contact_Form/includes
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/includes
  * @author     Joe Webber <signup@joewebber.co.uk>
  */
-class Jw_Contact_Form_i18n {
+class Organic_Contact_Form_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Jw_Contact_Form_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'jw-contact-form',
+			'organic-contact-form',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

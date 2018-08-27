@@ -22,7 +22,7 @@
  * @link       http://joewebber.co.uk
  * @since      1.0.0
  *
- * @package    Jw_Contact_Form
+ * @package    Organic_Contact_Form
  */
 
 // If uninstall not called from WordPress, then exit.

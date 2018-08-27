@@ -1,5 +1,5 @@
 {
-  "name": "jw-contact-form",
+  "name": "organic-contact-form",
   "version": "1.0.0",
   "description": "Simple Contact Form Plugin for Wordpress",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joewebber/jw-contact-form.git"
+    "url": "git+https://github.com/joewebber/organic-contact-form.git"
   },
   "author": "Joe Webber",
   "license": "GPL-2.0",
   "bugs": {
-    "url": "https://github.com/joewebber/jw-contact-form/issues"
+    "url": "https://github.com/joewebber/organic-contact-form/issues"
   },
-  "homepage": "https://github.com/joewebber/jw-contact-form#readme",
+  "homepage": "https://github.com/joewebber/organic-contact-form#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-sass": "^4.0.1"
