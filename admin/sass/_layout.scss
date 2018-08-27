@@ -7,4 +7,42 @@
 
 	}
 
+	.postbox-container {
+
+		&.full-width {
+
+			width: 100%;
+
+		}
+
+		&.half-width {
+
+			@media only screen and (min-width: 800px) {
+
+				width: 49%;
+
+				&:first-child {
+
+					margin-right: 1%;
+
+				}
+
+				&:last-child {
+
+					margin-left: 1%;
+
+				}
+
+			}
+
+			@media only screen and (max-width: 799px) {
+
+				width: 100%;
+
+			}
+
+		}
+
+	}
+
 }
