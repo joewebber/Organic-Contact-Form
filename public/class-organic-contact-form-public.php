@@ -59,6 +59,33 @@ class Organic_Contact_Form_Public {
 	private $errors;
 
 	/**
+	 * Show Form
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var     boolean    $show_form    Whether to show the form or not.
+	 */
+	private $show_form;
+
+	/**
+	 * Show Success Message
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var     boolean    $show_success_message    Whether to show the success message or not.
+	 */
+	private $show_success_message;
+
+	/**
+	 * Form Submitted
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var     boolean    $form_submitted    Whether the form has been submitted.
+	 */
+	private $form_submitted;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -79,8 +106,20 @@ class Organic_Contact_Form_Public {
 		// Empty the errors array
 		$this->errors = array();
 
+		// Set the form to be shown
+		$this->show_form = true;
+
+		// Set the success message to be hidden
+		$this->show_success_message = false;
+
+		// Set the form submitted status
+		$this->form_submitted = false;
+
 		// If the form has been posted, and the data is there
 		if ( isset( $_POST['organic_form_fields'] ) && !empty( $_POST['organic_form_fields'] ) ) {
+
+			// Set the form submitted status
+			$this->form_submitted = true;
 
 			// Validate the data
 			$this->validate_form_data( $_POST['organic_form_fields'] );
@@ -90,6 +129,12 @@ class Organic_Contact_Form_Public {
 
 				// Save the submission
 				$this->save_submission( $_POST['organic_form_fields'] );
+
+				// Set the form to be hidden
+				$this->show_form = false;
+
+				// Set the success message to be shown
+				$this->show_success_message = true;
 
 			}
 
@@ -157,8 +202,21 @@ class Organic_Contact_Form_Public {
     	// Get the form fields
     	$fields = $this->get_fields();
 
-    	// Include the file that generates the html
-        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-form.php' );
+    	// If we are showing the form
+    	if ( $this->show_form ) {
+
+    		// Include the file that generates the html
+        	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-form.php' );
+
+        }
+
+        // If we are showing the success message
+        if ( $this->show_success_message ) {
+
+        	// Include the file that generates the html
+        	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-success.php' );
+
+        }
 
         // Return the html for the form
         return $html;

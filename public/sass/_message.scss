@@ -1,0 +1,36 @@
+.organic-form-message {
+
+	@include prefix(border-radius, 5px);
+	padding: 1em;
+	margin: 1.2em 0;
+	font-size: 0.9em;
+
+	.organic-message-title {
+
+		font-weight: bold;
+
+	}
+
+	&.organic-form-error {
+
+		border: 1px solid $border-red;
+		background: $background-pink;
+
+		span {
+
+			display: block;
+			color: $border-red;
+
+		}
+
+	}
+
+	&.organic-form-success {
+
+		border: 1px solid $border-green;
+		background: $background-green;
+		color: $border-green;
+
+	}
+
+}

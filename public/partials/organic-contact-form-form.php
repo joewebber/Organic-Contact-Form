@@ -13,16 +13,16 @@
  */
 
 // Variable to hold the html
-$html = '';
+$html = '<div class="organic-contact-form' . ( $this->form_submitted ? ' submitted' : '' ) . '">';
 
 // If we have errors
 if ( !empty( $this->errors ) ) {
 
 	// Open the error div
-	$html .= '<div class="organic-form-error">';
+	$html .= '<div class="organic-form-message organic-form-error">';
 
 	// Error intro text
-	$html .= '<span class="organic-error-title">The following errors have occurred:</span>';
+	$html .= '<span class="organic-message-title">The following errors have occurred:</span>';
 
 	// Loop through the errors
 	foreach ( $this->errors as $error ) {
@@ -111,3 +111,6 @@ $html .= '<button type="submit">Send Enquiry</button>';
 
 // Close the form tag
 $html .= '</form>';
+
+// Close the wrapper div
+$html .= '</div>';
