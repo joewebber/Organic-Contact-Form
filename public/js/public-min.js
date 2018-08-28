@@ -1,0 +1,1 @@
+!function(t){"use strict";t(function(){t(".organic-contact-form.submitted").length>0&&t([document.documentElement,document.body]).animate({scrollTop:t(".organic-contact-form.submitted").offset().top},1e3)})}(jQuery);
