@@ -1,0 +1,31 @@
+.organic-frontend-form {
+
+	.error {
+
+		input, textarea {
+
+			border: 1px solid $border-red;
+
+		}
+
+		label {
+
+			color: $border-red;
+
+		}
+
+	}
+		
+	label {
+
+		margin-bottom: 5px;
+
+	}
+
+	input, textarea {
+
+		margin-bottom: 20px;
+
+	}
+
+}

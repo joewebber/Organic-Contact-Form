@@ -44,10 +44,19 @@ class Organic_Contact_Form_Public {
 	 * The database prefix for the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   private
 	 * @var      string    $db_prefix    The database prefix for the plugin.
 	 */
 	private $db_prefix;
+
+	/**
+	 * Validation errors
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var     array    $errors    An array to hold validation errors.
+	 */
+	private $errors;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -67,11 +76,22 @@ class Organic_Contact_Form_Public {
 		// Set the db prefix
 		$this->db_prefix = $db_prefix;
 
+		// Empty the errors array
+		$this->errors = array();
+
 		// If the form has been posted, and the data is there
 		if ( isset( $_POST['organic_form_fields'] ) && !empty( $_POST['organic_form_fields'] ) ) {
 
-			// Save the submission
-			$this->save_submission( $_POST['organic_form_fields'] );
+			// Validate the data
+			$this->validate_form_data( $_POST['organic_form_fields'] );
+
+			// If we have no errors
+			if ( empty( $this->errors ) ) {
+
+				// Save the submission
+				$this->save_submission( $_POST['organic_form_fields'] );
+
+			}
 
 		}
 
@@ -146,6 +166,31 @@ class Organic_Contact_Form_Public {
     }
 
     /**
+     * Get Form Field
+     *
+     * Retrieves single form field from the database
+     *
+	 * @since    1.0.0
+	 * @param    $form_field_id int The id of the form field
+	 * @return   $fields object An object containing the field data
+     */
+    private function get_field( $form_field_id ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the field
+		$sql = "SELECT * FROM " . $this->db_prefix . "_fields WHERE form_field_id = " . (int) $form_field_id;
+
+		// Run the query to get the field
+		$field = $wpdb->get_results( $sql, OBJECT );
+
+		// Return the field
+		return $field[0];
+
+    }
+
+    /**
      * Get Form Fields
      *
      * Retrieves the fields from the database and returns them
@@ -170,9 +215,42 @@ class Organic_Contact_Form_Public {
     }
 
     /**
+     * Validate form data
+     *
+     * Validates the posted form data
+     *
+	 * @since    1.0.0
+	 * @param   $data array An array of the form data
+     */
+    private function validate_form_data( $data ) {
+
+    	// Loop through the form data
+		foreach( $data as $form_field_id => $value ) {
+
+			// Get the field data from the database
+			$field = $this->get_field( $form_field_id );
+
+			// If the field is required
+			if( (int) $field->required == 1) {
+
+				// If the value is empty
+				if( empty( $value ) ) {
+
+					// Add to errors array
+					$this->errors[ $field->form_field_id ] = 'The "' . $field->label . '" field must be filled in';
+
+				}
+
+			}
+
+		}
+
+    }
+
+    /**
      * Saves user submission
      *
-     * Validates and stores the data into the database
+     * Stores the data into the database
      *
 	 * @since    1.0.0
 	 * @param   $data array An array of the form data

@@ -12,11 +12,39 @@
  * @subpackage Organic_Contact_Form/public/partials
  */
 
+// Variable to hold the html
+$html = '';
+
+// If we have errors
+if ( !empty( $this->errors ) ) {
+
+	// Open the error div
+	$html .= '<div class="organic-form-error">';
+
+	// Error intro text
+	$html .= '<span class="organic-error-title">The following errors have occurred:</span>';
+
+	// Loop through the errors
+	foreach ( $this->errors as $error ) {
+
+		// Output the error in a span
+		$html .= '<span>' . $error . '</span>';
+
+	}
+
+	// Close the error div
+	$html .= '</div>';
+
+}
+
 // Variable to hold the html (opening tag for form)
-$html = '<form name="organic_contact_form" method="post" action="">';
+$html .= '<form name="organic_contact_form" method="post" action="" class="organic-frontend-form">';
 
 // Loop through the fields
 foreach ($fields as $field) {
+
+	// Open the containing div (add the error class if an error is present for this field)
+	$html .= '<div class="input-' . $field->field_type . '' . ( ( !empty( $this->errors ) && isset( $this->errors[ $field->form_field_id ] ) ) ? ' error' : '') . '">';
 
 	// Set the label tag for the field
 	$label = '<label for="' . $field->name . '">' . $field->label . '</label>';
@@ -72,6 +100,9 @@ foreach ($fields as $field) {
 
 	// Add the tag to the output
 	$html .= $tag;
+
+	// Close the containing div
+	$html .= "</div>";
 
 }
 

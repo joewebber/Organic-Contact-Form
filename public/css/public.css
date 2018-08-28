@@ -1,4 +1,1 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.organic-frontend-form .error input,.organic-frontend-form .error textarea{border:1px solid crimson}.organic-frontend-form .error label{color:crimson}.organic-frontend-form label{margin-bottom:5px}.organic-frontend-form input,.organic-frontend-form textarea{margin-bottom:20px}.organic-form-error{margin:1.2em 0;border:1px solid crimson;background:#ffb6c1;-webkit-border-radius:5px;-moz-border-radius:5px;-ms-border-radius:5px;-o-border-radius:5px;border-radius:5px;padding:1em}.organic-form-error .organic-error-title{font-weight:bold}.organic-form-error span{display:block;font-size:0.9em;color:crimson}

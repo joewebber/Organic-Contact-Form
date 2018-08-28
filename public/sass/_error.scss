@@ -1,0 +1,23 @@
+.organic-form-error {
+		
+	margin: 1.2em 0;
+	border: 1px solid $border-red;
+	background: $background-pink;
+	@include prefix(border-radius, 5px);
+	padding: 1em;
+
+	.organic-error-title {
+
+		font-weight: bold;
+
+	}
+
+	span {
+
+		display: block;
+		font-size: 0.9em;
+		color: $border-red;
+
+	}
+
+}
