@@ -93,6 +93,26 @@
 
 				<h2 class="hndle"><span>Top Days</span></h2>
 
+				<div class="inside">
+
+					<div class="main">
+
+						<?php
+
+							// If we have days
+							if ( !empty( $top_days ) ) {
+
+								// Include the view
+								include_once( plugin_dir_path( __FILE__ ) . '/organic-contact-form-top-days.php' );						
+
+							}
+
+						?>
+
+					</div>
+
+				</div>
+
 			</div>
 
 		</div>
