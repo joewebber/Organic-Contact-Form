@@ -73,7 +73,7 @@ class Organic_Contact_Form {
 	 * @access 	private
 	 * @var  	string 		$option_name 	The option name of this plugin
 	 */
-	private $option_name = 'organic_contact_form';
+	protected $option_name = 'organic_contact_form';
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -82,9 +82,10 @@ class Organic_Contact_Form {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
+	 * @param    boolean $load Whether to run the setup methods or not
 	 * @since    1.0.0
 	 */
-	public function __construct() {
+	public function __construct( $run = true ) {
 
 		// Use the Wordpress database global (required to get database prefix)
 		global $wpdb;
@@ -108,17 +109,22 @@ class Organic_Contact_Form {
 		// Set the plugin db prefix
 		$this->db_prefix = $wpdb->prefix . 'organic_contact_form';
 
-		// Load dependencies
-		$this->load_dependencies();
+		// If we are running the setup methods
+		if ( $run ) {
 
-		// Set locale
-		$this->set_locale();
+			// Load dependencies
+			$this->load_dependencies();
 
-		// Define admin hooks
-		$this->define_admin_hooks();
+			// Set locale
+			$this->set_locale();
 
-		// Define public hooks
-		$this->define_public_hooks();
+			// Define admin hooks
+			$this->define_admin_hooks();
+
+			// Define public hooks
+			$this->define_public_hooks();
+
+		}
 
 	}
 
@@ -193,7 +199,7 @@ class Organic_Contact_Form {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Organic_Contact_Form_Admin( $this->get_plugin_name(), $this->get_version(), $this->get_db_prefix() );
+		$plugin_admin = new Organic_Contact_Form_Admin();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
@@ -218,7 +224,7 @@ class Organic_Contact_Form {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Organic_Contact_Form_Public( $this->get_plugin_name(), $this->get_version(), $this->get_db_prefix() );
+		$plugin_public = new Organic_Contact_Form_Public();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -292,5 +298,54 @@ class Organic_Contact_Form {
 	public function get_db_prefix() {
 		return $this->db_prefix;
 	}
+
+	/**
+     * Get Form Field
+     *
+     * Retrieves single form field from the database
+     *
+	 * @since    1.0.0
+	 * @param    $form_field_id int The id of the form field
+	 * @return   $fields object An object containing the field data
+     */
+    protected function get_field( $form_field_id ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the field
+		$sql = "SELECT * FROM " . $this->db_prefix . "_fields WHERE form_field_id = " . (int) $form_field_id;
+
+		// Run the query to get the field
+		$field = $wpdb->get_results( $sql, OBJECT );
+
+		// Return the field
+		return $field[0];
+
+    }
+
+    /**
+     * Get Form Fields
+     *
+     * Retrieves the fields from the database and returns them
+     *
+	 * @since    1.0.0
+	 * @return   $fields array An array of the form fields
+     */
+    protected function get_fields() {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the fields
+		$sql = "SELECT * FROM " . $this->db_prefix . "_fields";
+
+		// Run the query to get the fields
+		$fields = $wpdb->get_results( $sql, OBJECT );
+
+		// Return the fields
+		return $fields;
+
+    }
 
 }

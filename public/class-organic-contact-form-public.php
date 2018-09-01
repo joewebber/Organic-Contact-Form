@@ -20,34 +20,16 @@
  * @subpackage Organic_Contact_Form/public
  * @author     Joe Webber <signup@joewebber.co.uk>
  */
-class Organic_Contact_Form_Public {
+class Organic_Contact_Form_Public extends Organic_Contact_Form {
 
 	/**
-	 * The ID of this plugin.
+	 * The parent class
 	 *
 	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @access   protected
+	 * @var      Organic_Contact_Form    $private    An instance of the parent class
 	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * The database prefix for the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $db_prefix    The database prefix for the plugin.
-	 */
-	private $db_prefix;
+	private $parent;
 
 	/**
 	 * Validation errors
@@ -86,31 +68,14 @@ class Organic_Contact_Form_Public {
 	private $form_submitted;
 
 	/**
-	 * The options name to be used in this plugin
-	 *
-	 * @since  	1.0.0
-	 * @access 	private
-	 * @var  	string 		$option_name 	The option name of this plugin
-	 */
-	private $option_name = 'organic_contact_form';
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version, $db_prefix ) {
+	public function __construct() {
 
-		// Set the plugin name
-		$this->plugin_name = $plugin_name;
-
-		// Set the plugin version
-		$this->version = $version;
-
-		// Set the db prefix
-		$this->db_prefix = $db_prefix;
+		// Instantiate the parent class
+		$this->parent = new Organic_Contact_Form( false );
 
 		// Empty the errors array
 		$this->errors = array();
@@ -170,7 +135,7 @@ class Organic_Contact_Form_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->parent->plugin_name, plugin_dir_url( __FILE__ ) . 'css/public.css', array(), $this->parent->version, 'all' );
 
 	}
 
@@ -193,7 +158,7 @@ class Organic_Contact_Form_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public-min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->parent->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public-min.js', array( 'jquery' ), $this->parent->version, false );
 
 	}
 
@@ -209,13 +174,13 @@ class Organic_Contact_Form_Public {
     public function include_form_partial() {
 
     	// Get the form fields
-    	$fields = $this->get_fields();
+    	$fields = $this->parent->get_fields();
 
     	// If we are showing the form
     	if ( $this->show_form ) {
 
     		// Get captcha public key
-    		$public_key = get_option( $this->option_name . '_captcha_public_key' );
+    		$public_key = get_option( $this->parent->option_name . '_captcha_public_key' );
 
     		// Include the file that generates the html
         	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-form.php' );
@@ -236,55 +201,6 @@ class Organic_Contact_Form_Public {
     }
 
     /**
-     * Get Form Field
-     *
-     * Retrieves single form field from the database
-     *
-	 * @since    1.0.0
-	 * @param    $form_field_id int The id of the form field
-	 * @return   $fields object An object containing the field data
-     */
-    private function get_field( $form_field_id ) {
-
-    	// Use the Wordpress database global
-		global $wpdb;
-
-		// Structure the query to get the field
-		$sql = "SELECT * FROM " . $this->db_prefix . "_fields WHERE form_field_id = " . (int) $form_field_id;
-
-		// Run the query to get the field
-		$field = $wpdb->get_results( $sql, OBJECT );
-
-		// Return the field
-		return $field[0];
-
-    }
-
-    /**
-     * Get Form Fields
-     *
-     * Retrieves the fields from the database and returns them
-     *
-	 * @since    1.0.0
-	 * @return   $fields array An array of the form fields
-     */
-    private function get_fields() {
-
-    	// Use the Wordpress database global
-		global $wpdb;
-
-		// Structure the query to get the fields
-		$sql = "SELECT * FROM " . $this->db_prefix . "_fields";
-
-		// Run the query to get the fields
-		$fields = $wpdb->get_results( $sql, OBJECT );
-
-		// Return the fields
-		return $fields;
-
-    }
-
-    /**
      * Validate form data
      *
      * Validates the posted form data
@@ -298,7 +214,7 @@ class Organic_Contact_Form_Public {
 		foreach( $data as $form_field_id => $value ) {
 
 			// Get the field data from the database
-			$field = $this->get_field( $form_field_id );
+			$field = $this->parent->get_field( $form_field_id );
 
 			// If the field is required
 			if( (int) $field->required == 1) {
@@ -334,7 +250,7 @@ class Organic_Contact_Form_Public {
 		global $wp;
 
 		// Save the submission
-		$wpdb->insert( $this->db_prefix . '_submissions',
+		$wpdb->insert( $this->parent->db_prefix . '_submissions',
 			array(
 				'created' 	=> date( 'Y-m-d H:i:s' ),
 				'url' 		=> home_url( add_query_arg( $_GET, $wp->request ) )
@@ -348,7 +264,7 @@ class Organic_Contact_Form_Public {
 		foreach( $data as $form_field_id => $value ) {
 
 			// Save the field / value
-			$wpdb->insert( $this->db_prefix . '_submissions_fields',
+			$wpdb->insert( $this->parent->db_prefix . '_submissions_fields',
 				array(
 					'submission_id' 	=> $submission_id,
 					'form_field_id' 	=> $form_field_id,

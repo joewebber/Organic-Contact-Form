@@ -20,72 +20,26 @@
  * @subpackage Organic_Contact_Form/admin
  * @author     Joe Webber <signup@joewebber.co.uk>
  */
-class Organic_Contact_Form_Admin {
+class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
 	/**
-	 * The ID of this plugin.
+	 * The parent class
 	 *
 	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @access   protected
+	 * @var      Organic_Contact_Form    $private    An instance of the parent class
 	 */
-	private $plugin_name;
-
-	/**
-	 * The title of this plugin.
-	 *
-	 * Used for display purposes only
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_title    The title of this plugin.
-	 */
-	private $plugin_title;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * The database prefix for the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $db_prefix    The database prefix for the plugin.
-	 */
-	private $db_prefix;
-
-	/**
-	 * The options name to be used in this plugin
-	 *
-	 * @since  	1.0.0
-	 * @access 	private
-	 * @var  	string 		$option_name 	The option name of this plugin
-	 */
-	private $option_name = 'organic_contact_form';
+	private $parent;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version, $db_prefix ) {
+	public function __construct() {
 
-		// Set plugin name
-		$this->plugin_name = $plugin_name;
-
-		// Set plugin version
-		$this->version = $version;
-
-		// Set the db prefix
-		$this->db_prefix = $db_prefix;
+		// Instantiate the parent class
+		$this->parent = new Organic_Contact_Form( false );
 
 	}
 
@@ -108,7 +62,7 @@ class Organic_Contact_Form_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->parent->plugin_name, plugin_dir_url( __FILE__ ) . 'css/admin.css', array(), $this->parent->version, 'all' );
 
 	}
 
@@ -131,7 +85,7 @@ class Organic_Contact_Form_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin-min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->parent->plugin_name, plugin_dir_url( __FILE__ ) . 'js/admin-min.js', array( 'jquery' ), $this->parent->version, false );
 
 	}
 
@@ -144,37 +98,37 @@ class Organic_Contact_Form_Admin {
 		
 		// Add a General section
 		add_settings_section(
-			$this->option_name . '_general',
-			__( 'General', $this->plugin_name ),
-			array( $this, $this->option_name . '_general_cb' ),
-			$this->plugin_name
+			$this->parent->option_name . '_general',
+			__( 'General', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_general_cb' ),
+			$this->parent->plugin_name
 		);
 
 		// Add captcha public key
 		add_settings_field(
-			$this->option_name . '_captcha_public_key',
-			__( 'Captcha Public Key', $this->plugin_name ),
-			array( $this, $this->option_name . '_captcha_public_key_cb' ),
-			$this->plugin_name,
-			$this->option_name . '_general',
-			array( 'label_for' => $this->option_name . '_captcha_public_key' )
+			$this->parent->option_name . '_captcha_public_key',
+			__( 'Captcha Public Key', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_captcha_public_key_cb' ),
+			$this->parent->plugin_name,
+			$this->parent->option_name . '_general',
+			array( 'label_for' => $this->parent->option_name . '_captcha_public_key' )
 		);
 
 		// Register the public captcha key field
-		register_setting( $this->plugin_name, $this->option_name . '_captcha_public_key', 'filter_sanitize_string' );
+		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_captcha_public_key', 'filter_sanitize_string' );
 
 		// Add captcha private key
 		add_settings_field(
-			$this->option_name . '__captcha_private_key',
-			__( 'Captcha Private Key', $this->plugin_name ),
-			array( $this, $this->option_name . '_captcha_private_key_cb' ),
-			$this->plugin_name,
-			$this->option_name . '_general',
-			array( 'label_for' => $this->option_name . '_captcha_private_key' )
+			$this->parent->option_name . '__captcha_private_key',
+			__( 'Captcha Private Key', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_captcha_private_key_cb' ),
+			$this->parent->plugin_name,
+			$this->parent->option_name . '_general',
+			array( 'label_for' => $this->parent->option_name . '_captcha_private_key' )
 		);
 
 		// Register the private captcha key field
-		register_setting( $this->plugin_name, $this->option_name . '_captcha_private_key', 'filter_sanitize_string' );
+		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_captcha_private_key', 'filter_sanitize_string' );
 	}
 
 	/**
@@ -185,7 +139,7 @@ class Organic_Contact_Form_Admin {
 	public function organic_contact_form_general_cb() {
 
 		// Output the text for the general section
-		echo '<p>' . __( 'Update the settings below', $this->plugin_name ) . '</p>';
+		echo '<p>' . __( 'Update the settings below', $this->parent->plugin_name ) . '</p>';
 
 	}
 
@@ -197,10 +151,10 @@ class Organic_Contact_Form_Admin {
 	public function organic_contact_form_captcha_public_key_cb() {
 
 		// Get the current value
-		$value = get_option( $this->option_name . '_captcha_public_key' );
+		$value = get_option( $this->parent->option_name . '_captcha_public_key' );
 
 		// Output the captcha public key field
-		echo '<input type="text" name="' . $this->option_name . '_captcha_public_key' . '" id="' . $this->option_name . '_captcha_public_key' . '" value="' . $value . '">';
+		echo '<input type="text" name="' . $this->parent->option_name . '_captcha_public_key' . '" id="' . $this->parent->option_name . '_captcha_public_key' . '" value="' . $value . '">';
 	}
 
 	/**
@@ -211,10 +165,10 @@ class Organic_Contact_Form_Admin {
 	public function organic_contact_form_captcha_private_key_cb() {
 
 		// Get the current value
-		$value = get_option( $this->option_name . '_captcha_private_key' );
+		$value = get_option( $this->parent->option_name . '_captcha_private_key' );
 
 		// Output the captcha private key field
-		echo '<input type="text" name="' . $this->option_name . '_captcha_private_key' . '" id="' . $this->option_name . '_captcha_private_key' . '" value="' . $value . '">';
+		echo '<input type="text" name="' . $this->parent->option_name . '_captcha_private_key' . '" id="' . $this->parent->option_name . '_captcha_private_key' . '" value="' . $value . '">';
 	}
 
 	/**
@@ -225,11 +179,11 @@ class Organic_Contact_Form_Admin {
 	public function add_options_page() {
 		
 		// Register options page
-		$this->plugin_screen_hook_suffix = add_options_page(
-			__( 'Organic Contact Form Settings', $this->plugin_name ),
-			__( 'Organic Contact Form', $this->plugin_name ),
+		add_options_page(
+			__( 'Organic Contact Form Settings', $this->parent->plugin_name ),
+			__( 'Organic Contact Form', $this->parent->plugin_name ),
 			'manage_options',
-			$this->plugin_name,
+			$this->parent->plugin_name,
 			array( $this, 'display_options_page' )
 		);
 	
@@ -258,8 +212,8 @@ class Organic_Contact_Form_Admin {
 
     	// Add main menu page using Wordpress function
         add_menu_page(
-            __( 'Organic Contact Form', $this->plugin_name ),
-            __( 'Organic Contact Form', $this->plugin_name ),
+            __( 'Organic Contact Form', $this->parent->plugin_name ),
+            __( 'Organic Contact Form', $this->parent->plugin_name ),
             'read',
             'organic-contact-form-dashboard',
             array( $this, 'include_dashboard_partial' ),
@@ -270,8 +224,8 @@ class Organic_Contact_Form_Admin {
         // Add submissions submenu item
         add_submenu_page(
         	'organic-contact-form-dashboard',
-        	__( 'Organic Contact Form Submissions', $this->plugin_name ),
-        	__( 'Submissions', $this->plugin_name ),
+        	__( 'Organic Contact Form Submissions', $this->parent->plugin_name ),
+        	__( 'Submissions', $this->parent->plugin_name ),
             'read',
             'organic-contact-form-submissions',
             array( $this, 'include_submissions_partial' )
@@ -280,8 +234,8 @@ class Organic_Contact_Form_Admin {
         // Add form fields submenu item
         add_submenu_page(
         	'organic-contact-form-dashboard',
-        	__( 'Organic Contact Form Fields', $this->plugin_name ),
-        	__( 'Fields', $this->plugin_name ),
+        	__( 'Organic Contact Form Fields', $this->parent->plugin_name ),
+        	__( 'Fields', $this->parent->plugin_name ),
             'read',
             'organic-contact-form-fields',
             array( $this, 'include_fields_partial' )
@@ -361,7 +315,7 @@ class Organic_Contact_Form_Admin {
 		$result = array();
 
 		// Structure the query to get the submissions
-		$sql = "SELECT * FROM " . $this->db_prefix . "_submissions
+		$sql = "SELECT * FROM " . $this->parent->db_prefix . "_submissions
 		ORDER BY " . $order . " " . $order_direction . "
 		LIMIT " . (int) $start . ", " . (int) $limit;
 
@@ -403,7 +357,7 @@ class Organic_Contact_Form_Admin {
 		global $wpdb;
 
 		// Structure the query to get the submissions
-		$sql = "SELECT * FROM " . $this->db_prefix . "_submissions_fields
+		$sql = "SELECT * FROM " . $this->parent->db_prefix . "_submissions_fields
 		WHERE submission_id = " . $submission_id;
 
 		// Run the query to get the submission fields
@@ -428,7 +382,7 @@ class Organic_Contact_Form_Admin {
 		global $wpdb;
 
 		// Structure the query to get the pages
-		$sql = "SELECT COUNT(*) AS total_submissions, url FROM " . $this->db_prefix . "_submissions
+		$sql = "SELECT COUNT(*) AS total_submissions, url FROM " . $this->parent->db_prefix . "_submissions
 		GROUP BY url
 		LIMIT 5";
 
@@ -454,7 +408,7 @@ class Organic_Contact_Form_Admin {
 		global $wpdb;
 
 		// Structure the query to get the pages
-		$sql = "SELECT COUNT(*) AS total_submissions, DAYNAME(FROM_UNIXTIME(UNIX_TIMESTAMP(created))) AS day_name FROM " . $this->db_prefix . "_submissions
+		$sql = "SELECT COUNT(*) AS total_submissions, DAYNAME(FROM_UNIXTIME(UNIX_TIMESTAMP(created))) AS day_name FROM " . $this->parent->db_prefix . "_submissions
 		GROUP BY day_name
 		ORDER BY total_submissions DESC";
 
