@@ -253,7 +253,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
     public function include_dashboard_partial() {
 
     	// Get recent submissions
-    	$recent_submissions = $this->get_submissions( 0, 5 );
+    	$recent_submissions = $this->get_submissions( false, 5 );
 
     	// Get top pages
     	$top_pages = $this->get_top_pages();
@@ -274,6 +274,9 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 	 * @since    1.0.0
      */
     public function include_submissions_partial() {
+
+    	// Get the submissions
+    	$submissions = $this->get_submissions();
 
     	// Include the view
         include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions.php' );
@@ -306,18 +309,67 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 	 * @param    $order string The order direction
 	 * @return   $fields array An array of the submission data
      */
-    private function get_submissions( $start = 0, $limit = 10, $order = 'created', $order_direction = 'DESC' ) {
+    private function get_submissions( $paginate = true, $limit = 10, $order = 'created', $order_direction = 'DESC' ) {
 
     	// Use the Wordpress database global
 		global $wpdb;
 
+		// Set pagination output to empty
+		$pagination = '';
+
+		// If we are paginating the result
+		if ( $paginate ) {
+
+			// Get the page we are on (or set to 1 if nto supplied)
+			$page = isset( $_GET['organic-page'] ) ? (int) $_GET['organic-page'] : 1;
+
+			// Set the offset
+			$offset = ( $page * $limit ) - $limit;
+
+			// Get the total number of submissions
+			$total = $wpdb->get_var( "SELECT COUNT(*) FROM " . $this->parent->db_prefix . "_submissions" );
+
+			// Set the pagination output
+			$pagination = paginate_links( 
+				array(
+
+                    'base' => add_query_arg( 'organic-page', '%#%' ),
+                    'format' => '',
+                    'prev_text' => __('« Previous'),
+					'next_text' => __('Next »'),
+                    'total' => ceil($total / $limit),
+                    'current' => $page,
+                    'show_all' => true
+
+			    )
+			);
+
+		} else { // If we are not paginating the result
+
+			// Set the offset to zero
+			$offset = 0;
+
+		}
+
 		// Array to hold submission result data
-		$result = array();
+		$result = array(
+
+			'data' => array(),
+			'pagination' => $pagination
+
+		);
 
 		// Structure the query to get the submissions
 		$sql = "SELECT * FROM " . $this->parent->db_prefix . "_submissions
-		ORDER BY " . $order . " " . $order_direction . "
-		LIMIT " . (int) $start . ", " . (int) $limit;
+		ORDER BY " . $order . " " . $order_direction;
+
+		// If the limit is zero or greater
+		if ($limit >= 0) {
+
+			// Limit the results
+			$sql .= " LIMIT " . (int) $offset . ", " . (int) $limit;
+
+		}
 
 		// Run the query to get the submissions
 		$submissions = $wpdb->get_results( $sql, OBJECT );
@@ -329,7 +381,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 			$submission_fields = $this->get_submission_fields( $submission->submission_id );
 
 			// Add the submission data to the result
-			$result[] = array(
+			$result['data'][] = array(
 
 				'submission' => $submission,
 				'submission_fields' => $submission_fields
