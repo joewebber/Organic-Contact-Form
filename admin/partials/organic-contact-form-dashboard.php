@@ -29,6 +29,26 @@
 
 				<h2 class="hndle"><span>Recent Submissions</span></h2>
 
+				<div class="inside">
+
+					<div class="main">
+
+						<?php
+
+							// If we have recent submissions
+							if ( !empty( $recent_submissions ) ) {
+
+								// Include the table view
+								include_once( plugin_dir_path( __FILE__ ) . '/organic-contact-form-submissions-table.php' );						
+
+							}
+
+						?>
+
+					</div>
+
+				</div>
+
 			</div>
 
 		</div>

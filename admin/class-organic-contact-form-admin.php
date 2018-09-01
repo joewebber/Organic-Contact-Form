@@ -52,6 +52,15 @@ class Organic_Contact_Form_Admin {
 	private $version;
 
 	/**
+	 * The database prefix for the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $db_prefix    The database prefix for the plugin.
+	 */
+	private $db_prefix;
+
+	/**
 	 * The options name to be used in this plugin
 	 *
 	 * @since  	1.0.0
@@ -74,6 +83,9 @@ class Organic_Contact_Form_Admin {
 
 		// Set plugin version
 		$this->version = $version;
+
+		// Set the db prefix
+		$this->db_prefix = $db_prefix;
 
 	}
 
@@ -266,8 +278,85 @@ class Organic_Contact_Form_Admin {
      */
     public function include_dashboard_partial() {
 
+    	// Get recent submissions
+    	$recent_submissions = $this->get_submissions( 0, 5 );
+
     	// Include the view
         include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-dashboard.php' );
+
+    }
+
+    /**
+     * Get Submissions
+     *
+     * Retrieves the submissions from the database and returns them
+     *
+	 * @since    1.0.0
+	 * @param    $start integer The record to start at
+	 * @param    $limit integer The number of rows to return
+	 * @param    $order string The field to order the results by
+	 * @param    $order string The order direction
+	 * @return   $fields array An array of the submission data
+     */
+    private function get_submissions( $start = 0, $limit = 10, $order = 'created', $order_direction = 'DESC' ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Array to hold submission result data
+		$result = array();
+
+		// Structure the query to get the submissions
+		$sql = "SELECT * FROM " . $this->db_prefix . "_submissions
+		ORDER BY " . $order . " " . $order_direction . "
+		LIMIT " . (int) $start . ", " . (int) $limit;
+
+		// Run the query to get the submissions
+		$submissions = $wpdb->get_results( $sql, OBJECT );
+
+		// Loop through each submission
+		foreach ( $submissions as $submission ) {
+
+			// Get submission fields for this submission
+			$submission_fields = $this->get_submission_fields( $submission->submission_id );
+
+			// Add the submission data to the result
+			$result[] = array(
+
+				'submission' => $submission,
+				'submission_fields' => $submission_fields
+			);
+
+		}
+
+		// Return the data
+		return $result;
+
+    }
+
+    /**
+     * Get Submission fields
+     *
+     * Retrieves the submission fields from the database and returns them
+     *
+	 * @since    1.0.0
+	 * @param    $submission_id integer The submission_id of the related row
+	 * @return   $fields array An array of the field data
+     */
+    private function get_submission_fields( $submission_id ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the submissions
+		$sql = "SELECT * FROM " . $this->db_prefix . "_submissions_fields
+		WHERE submission_id = " . $submission_id;
+
+		// Run the query to get the submission fields
+		$submission_fields = $wpdb->get_results( $sql, OBJECT );
+
+		// Return the submission fields
+		return $submission_fields;
 
     }
 
