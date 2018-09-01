@@ -63,6 +63,26 @@
 
 				<h2 class="hndle"><span>Top Pages</span></h2>
 
+				<div class="inside">
+
+					<div class="main">
+
+						<?php
+
+							// If we have pages
+							if ( !empty( $top_pages ) ) {
+
+								// Include the view
+								include_once( plugin_dir_path( __FILE__ ) . '/organic-contact-form-top-pages.php' );						
+
+							}
+
+						?>
+
+					</div>
+
+				</div>
+
 			</div>
 
 		</div>

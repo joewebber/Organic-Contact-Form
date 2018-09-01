@@ -281,6 +281,9 @@ class Organic_Contact_Form_Admin {
     	// Get recent submissions
     	$recent_submissions = $this->get_submissions( 0, 5 );
 
+    	// Get top pages
+    	$top_pages = $this->get_top_pages();
+
     	// Include the view
         include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-dashboard.php' );
 
@@ -357,6 +360,32 @@ class Organic_Contact_Form_Admin {
 
 		// Return the submission fields
 		return $submission_fields;
+
+    }
+
+    /**
+     * Get top pages
+     *
+     * Retrieves the top pages from the database by counting number of submissions, grouped by page
+     *
+	 * @since    1.0.0
+	 * @return   $fields array An array of the data
+     */
+    private function get_top_pages() {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the pages
+		$sql = "SELECT COUNT(*) AS total_submissions, url FROM " . $this->db_prefix . "_submissions
+		GROUP BY url
+		LIMIT 5";
+
+		// Run the query to get the pages
+		$pages = $wpdb->get_results( $sql, OBJECT );
+
+		// Return the pages
+		return $pages;
 
     }
 
