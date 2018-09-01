@@ -256,7 +256,7 @@ class Organic_Contact_Form_Admin {
      */
     public function register_dashboard_page() {
 
-    	// Add menu page using Wordpress function
+    	// Add main menu page using Wordpress function
         add_menu_page(
             __( 'Organic Contact Form', $this->plugin_name ),
             __( 'Organic Contact Form', $this->plugin_name ),
@@ -265,6 +265,26 @@ class Organic_Contact_Form_Admin {
             array( $this, 'include_dashboard_partial' ),
             'dashicons-wordpress-alt',
             9999
+        );
+
+        // Add submissions submenu item
+        add_submenu_page(
+        	'organic-contact-form-dashboard',
+        	__( 'Organic Contact Form Submissions', $this->plugin_name ),
+        	__( 'Submissions', $this->plugin_name ),
+            'read',
+            'organic-contact-form-submissions',
+            array( $this, 'include_submissions_partial' )
+        );
+
+        // Add form fields submenu item
+        add_submenu_page(
+        	'organic-contact-form-dashboard',
+        	__( 'Organic Contact Form Fields', $this->plugin_name ),
+        	__( 'Fields', $this->plugin_name ),
+            'read',
+            'organic-contact-form-fields',
+            array( $this, 'include_fields_partial' )
         );
 
     }
@@ -289,6 +309,34 @@ class Organic_Contact_Form_Admin {
 
     	// Include the view
         include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-dashboard.php' );
+
+    }
+
+    /**
+     * Include Submissions Partial
+     *
+     * This function includes the submissions view
+     *
+	 * @since    1.0.0
+     */
+    public function include_submissions_partial() {
+
+    	// Include the view
+        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions.php' );
+
+    }
+
+    /**
+     * Include Fields Partial
+     *
+     * This function includes the fields view
+     *
+	 * @since    1.0.0
+     */
+    public function include_fields_partial() {
+
+    	// Include the view
+        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-fields.php' );
 
     }
 
