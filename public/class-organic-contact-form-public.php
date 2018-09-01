@@ -86,6 +86,15 @@ class Organic_Contact_Form_Public {
 	private $form_submitted;
 
 	/**
+	 * The options name to be used in this plugin
+	 *
+	 * @since  	1.0.0
+	 * @access 	private
+	 * @var  	string 		$option_name 	The option name of this plugin
+	 */
+	private $option_name = 'organic_contact_form';
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -204,6 +213,9 @@ class Organic_Contact_Form_Public {
 
     	// If we are showing the form
     	if ( $this->show_form ) {
+
+    		// Get captcha public key
+    		$public_key = get_option( $this->option_name . '_captcha_public_key' );
 
     		// Include the file that generates the html
         	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-form.php' );

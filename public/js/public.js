@@ -21,3 +21,15 @@
 	});
 
 })( jQuery );
+
+/**
+ * Run when form is submitted
+ *
+ * @since    1.0.0
+ */
+function onSubmit(token) {
+	
+	// Submit the form
+	document.getElementById("organic_contact_form").submit();
+
+}

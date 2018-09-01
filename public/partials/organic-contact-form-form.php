@@ -38,7 +38,7 @@ if ( !empty( $this->errors ) ) {
 }
 
 // Variable to hold the html (opening tag for form)
-$html .= '<form name="organic_contact_form" method="post" action="" class="organic-frontend-form">';
+$html .= '<form name="organic_contact_form" id="organic_contact_form" method="post" action="" class="organic-frontend-form">';
 
 // Loop through the fields
 foreach ($fields as $field) {
@@ -107,7 +107,18 @@ foreach ($fields as $field) {
 }
 
 // Add the submit button
-$html .= '<button type="submit">Send Enquiry</button>';
+$html .= '<button type="submit"';
+
+// If we have a value for the recaptcha public key
+if ( !empty( $public_key ) ) {
+
+	// Add the captcha attributes to the button
+	$html .= ' class="g-recaptcha" data-sitekey="' . $public_key . '" data-callback="onSubmit"';
+
+}
+
+// Close the submit button
+$html .= '>Send Enquiry</button>';
 
 // Close the form tag
 $html .= '</form>';
