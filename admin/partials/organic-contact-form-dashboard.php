@@ -17,7 +17,7 @@
 
 	<header>
 
-		<h1><?php echo $this->plugin_title; ?></h1>
+		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
 	</header>
 
