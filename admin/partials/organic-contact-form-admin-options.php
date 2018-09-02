@@ -25,10 +25,10 @@
         <?php
 
         	// Get the settings fields
-            settings_fields( $this->plugin_name );
+            settings_fields( $this->parent->plugin_name );
 
             // Show the sections
-            do_settings_sections( $this->plugin_name );
+            do_settings_sections( $this->parent->plugin_name );
 
             // Show the submit button
             submit_button();
