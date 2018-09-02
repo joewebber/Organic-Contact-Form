@@ -275,11 +275,27 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
      */
     public function include_submissions_partial() {
 
-    	// Get the submissions
-    	$submissions = $this->get_submissions();
+    	// Get the submission id (if present)
+    	$submission_id = ( isset( $_GET['submission_id'] ) ) ? (int) $_GET['submission_id'] : 0;
 
-    	// Include the view
-        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions.php' );
+    	// If we have no submission id, show the list of submissions
+    	if ( $submission_id == 0 ) {
+
+	    	// Get the submissions
+	    	$submissions = $this->get_submissions();
+
+	    	// Include the view
+	        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions.php' );
+
+	    } else { // Else show the individual submission
+
+	    	// Get the submission data
+    		$submission = $this->get_submission( (int) $_GET['submission_id'] );
+
+    		// Include the view
+        	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions-view.php' );
+
+	    }
 
     }
 
@@ -385,11 +401,54 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
 				'submission' => $submission,
 				'submission_fields' => $submission_fields
+
 			);
 
 		}
 
 		// Return the data
+		return $result;
+
+    }
+
+    /**
+     * Get Submission
+     *
+     * Retrieves the submission from the database and returns
+     *
+	 * @since    1.0.0
+	 * @param    $submission_id integer The submission_id of the related row
+	 * @return   $fields array An array of the field data
+     */
+    private function get_submission( $submission_id ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Structure the query to get the submission and corresponding fields
+		$sql = "SELECT * FROM " . $this->parent->db_prefix . "_submissions
+		WHERE submission_id = " . $submission_id;
+
+		// Run the query to get the submission
+		$submissions = $wpdb->get_results( $sql, OBJECT );
+
+		// Loop through each submission
+		foreach ( $submissions as $submission ) {
+
+			// Get submission fields for this submission
+			$submission_fields = $this->get_submission_fields( $submission->submission_id );
+
+			// Add the submission data to the result
+			$result = array(
+
+				'submission' => $submission,
+				'submission_fields' => $submission_fields
+
+			);
+
+		}
+
+		// Return the submission
 		return $result;
 
     }
@@ -410,6 +469,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
 		// Structure the query to get the submissions
 		$sql = "SELECT * FROM " . $this->parent->db_prefix . "_submissions_fields
+		LEFT JOIN " . $this->parent->db_prefix . "_fields USING (form_field_id)
 		WHERE submission_id = " . $submission_id;
 
 		// Run the query to get the submission fields

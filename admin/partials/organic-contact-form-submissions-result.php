@@ -8,4 +8,6 @@
 
 	<td><?php echo $submission['submission_fields'][1]->value; ?></td>
 
+	<td><a href="admin.php?page=organic-contact-form-submissions&submission_id=<?php echo $submission['submission']->submission_id; ?>">View</a></td>
+
 </tr>
