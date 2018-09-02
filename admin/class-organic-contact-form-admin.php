@@ -26,7 +26,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 	 * The parent class
 	 *
 	 * @since    1.0.0
-	 * @access   protected
+	 * @access   private
 	 * @var      Organic_Contact_Form    $private    An instance of the parent class
 	 */
 	private $parent;
@@ -278,14 +278,22 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
     	// Get the submission id (if present)
     	$submission_id = ( isset( $_GET['submission_id'] ) ) ? (int) $_GET['submission_id'] : 0;
 
+    	// Get the export task status (if present)
+    	$export = ( isset( $_GET['export'] ) ) ? (int) $_GET['export'] : 0;
+
     	// If we have no submission id, show the list of submissions
     	if ( $submission_id == 0 ) {
 
 	    	// Get the submissions
 	    	$submissions = $this->get_submissions();
 
-	    	// Include the view
-	        include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions.php' );
+	    	// If we are not exporting
+	    	if ( $export == 0 ) {
+
+	        	// Include the view
+	        	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-submissions.php' );
+
+	        }
 
 	    } else { // Else show the individual submission
 
@@ -531,5 +539,101 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 		return $dates;
 
     }
+
+    /**
+     * Export CSV of submissions
+     *
+     *
+	 * @since    1.0.0
+     */
+    public function csv_export() {
+
+	    // Start the output buffering
+	    ob_start();
+	    
+	    // Set the filename
+	    $filename = $this->parent->plugin_name . '_export_' . date('d-m-Y_H-i-s') . '.csv';
+
+	    // Get the submissions
+	    $submissions = $this->get_submissions();
+	    
+	    // Add the created and URL fields to the header row
+	    $header_row = array(
+
+	        'Created',
+	        'URL'
+
+	    );
+
+    	// Loop through submission fields from first row of data
+    	foreach ( $submissions['data'][0]['submission_fields'] as $submission_field ) {
+
+    		// Add the field name to the header row
+    		$header_row[] = $submission_field->label;
+
+    	}
+
+	    // Open the PHP output for writing
+	    $fh = fopen( 'php://output', 'w' );
+
+	    // Output the padding characters for the CSV
+	    fprintf( $fh, chr(0xEF) . chr(0xBB) . chr(0xBF) );
+
+	    // Set the cache control header
+	    header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
+
+	    // Set the content description header
+	    header( 'Content-Description: File Transfer' );
+
+	    // Set the content type header
+	    header( 'Content-type: text/csv' );
+
+	    // Set the content disposition header
+	    header( "Content-Disposition: attachment; filename={$filename}" );
+
+	    // Set the expires header
+	    header( 'Expires: 0' );
+
+	    // Set the pragma header
+	    header( 'Pragma: public' );
+
+	    // Add the header row to the CSV
+	    fputcsv( $fh, $header_row );
+
+	    // Loop through the submissions
+	    foreach ( $submissions['data'] as $submission ) {
+
+	    	// Array to hold row data
+	    	$row = array();
+
+	    	// Add created date to row array
+	    	$row[] = date('d/m/Y H:i:s', strtotime($submission['submission']->created));
+
+	    	// Add URL to row array
+	    	$row[] = $submission['submission']->url;
+
+	    	// Loop through fields
+	    	foreach ( $submission['submission_fields'] as $submission_field ) {
+
+	    		// Add the field value to the row array
+	    		$row[] = $submission_field->value;
+
+	    	}
+
+	        // Add the submission data to the CSV
+	        fputcsv( $fh, $row );
+
+	    }
+
+	    // Close the file handler
+	    fclose( $fh );
+	    
+	    // Flush the output buffer
+	    ob_end_flush();
+	    
+	    // Kill the script
+	    die();
+
+	}
 
 }

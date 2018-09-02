@@ -1,1 +1,1 @@
-jQuery;
+!function(c){"use strict";c(function(){c(".organic-contact-form #doaction").click(function(){switch(c('.organic-contact-form .bulkactions select[name="action"]').val()){case"export_all_records":window.location.href="admin.php?page=organic-contact-form-submissions&export=1"}})})}(jQuery);

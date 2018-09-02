@@ -213,6 +213,16 @@ class Organic_Contact_Form {
 		// Add the dashboard page (which is the default)
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_dashboard_page' );
 
+		// Get the export task status (if present)
+    	$export = ( isset( $_GET['export'] ) ) ? (int) $_GET['export'] : 0;
+
+    	if ( $export == 1 ) {
+
+    		// Register the CSV export function on admin init
+	    	$this->loader->add_action( 'admin_init', $plugin_admin, 'csv_export' );
+
+	    }
+
 	}
 
 	/**
