@@ -316,6 +316,33 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
      */
     public function include_fields_partial() {
 
+    	// If we have post data
+    	if ( !empty( $_POST ) ) {
+
+    		// Save the form fields
+    		$errors = $this->save_fields( $_POST['field'] );
+
+    		// If there are no errors
+    		if ( empty( $errors ) ) {
+
+    			// Set the message
+    			$message = 'Fields have been saved';
+
+    		} else { // Else there are errors
+
+    			// Set the message
+    			$message = implode( '<br>', $errors );
+
+    		}
+
+    	} 
+
+    	// Get the fields
+    	$fields = $this->parent->get_fields();
+
+    	// Get the field types
+    	$field_types = $this->get_field_types();
+
     	// Include the view
         include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-fields.php' );
 
@@ -538,6 +565,90 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 		// Return the dates
 		return $dates;
 
+    }
+
+    /**
+     * Get field types
+     *
+     * Output an array of the field types
+     *
+	 * @since    1.0.0
+	 * @return   $fields array An array of the data
+     */
+    private function get_field_types() {
+
+    	// Return the field types 
+    	return array(
+
+    		'text' => 'Text',
+    		'email' => 'Email Address',
+    		'textarea' => 'Text Box'
+
+    	);
+    }
+
+    /**
+     * Validate field type
+     *
+     *
+	 * @since    1.0.0
+	 * @return   $value string The input value to validate
+     */
+    private function validate_field_type( $value ) {
+
+    	// Validate the field type and return the result
+    	return array_key_exists( $value, $this->get_field_types() );
+    }
+
+    /**
+     * Save fields
+     *
+     * Processes posted data from the field edit and saves it to the database
+     *
+	 * @since    1.0.0
+	 * @param    $data array An array of the posted data
+	 * @return   $errors array An array of errors
+     */
+    private function save_fields( $data ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Array to hold errors
+		$errors = array();
+
+    	// loop through the data
+    	foreach ( $data as $form_field_id => $values ) {
+
+    		// Sanitize the label using preg_replace to strip anything not alphanumeric or spaces
+    		$values['label'] = trim( preg_replace( "/[^a-zA-Z0-9 ]+/", "",  $values['label'] ) );
+
+    		// Set the name (Use Wordpress sanitize_title_with_dashes to allow only alphanumeric and dashes)
+    		$values['name'] = sanitize_title_with_dashes( $values['label'] );
+
+    		// Validate the field type
+    		if ( !$this->validate_field_type( $values['field_type'] ) ) {
+
+    			$errors[] = '"Field Type" must be one of the following:<br>' . implode( '<br>', $this->get_field_types() );
+
+    		}
+
+    		// Sanitize the required field (convert to int)
+    		$values['required'] = (int) $values['required'];
+
+    		// If we have no errors
+    		if ( empty( $errors ) ) {
+
+    			// Update the values in the database
+    			$wpdb->update($this->parent->db_prefix . '_fields', $values, array( 'form_field_id' => $form_field_id ) );
+
+    		}
+    		
+    	}
+
+    	// Return the errors array
+    	return $errors;
+    	
     }
 
     /**
