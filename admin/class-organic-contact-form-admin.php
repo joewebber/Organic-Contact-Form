@@ -335,7 +335,28 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
     		}
 
-    	} 
+    	}
+
+    	// If we have an id to delete
+    	if ( isset( $_GET['delete_id'] ) && (int) $_GET['delete_id'] > 0 ) {
+
+    		// Remove the field
+    		$this->delete_field( (int) $_GET['delete_id'] );
+
+    		// If there are no errors
+    		if ( empty( $errors ) ) {
+
+    			// Set the message
+    			$message = 'Field has been deleted';
+
+    		} else { // Else there are errors
+
+    			// Set the message
+    			$message = implode( '<br>', $errors );
+
+    		}
+
+    	}
 
     	// Get the fields
     	$fields = $this->parent->get_fields();
@@ -639,11 +660,54 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
     		// If we have no errors
     		if ( empty( $errors ) ) {
 
-    			// Update the values in the database
-    			$wpdb->update($this->parent->db_prefix . '_fields', $values, array( 'form_field_id' => $form_field_id ) );
+    			// If we have an existing field
+    			if ( (int) $form_field_id > 0) {
+
+    				// Update the values in the database
+    				$wpdb->update($this->parent->db_prefix . '_fields', $values, array( 'form_field_id' => $form_field_id ) );
+
+    			} else { // Else we have a new field
+
+    				// Insert the values into the database
+    				$wpdb->insert($this->parent->db_prefix . '_fields', $values );
+
+    			}
 
     		}
     		
+    	}
+
+    	// Return the errors array
+    	return $errors;
+    	
+    }
+
+    /**
+     * Delete field
+     *
+     * Removes a field from the database
+     *
+	 * @since    1.0.0
+	 * @param    $form_field_id int The ID of the form field to delete
+	 * @return   $errors array An array of errors
+     */
+    private function delete_field( $form_field_id ) {
+
+    	// Use the Wordpress database global
+		global $wpdb;
+
+		// Array to hold errors
+		$errors = array();
+
+    	// Remove the corresponding record from the database
+    	$delete = $wpdb->delete($this->parent->db_prefix . '_fields', array( 'form_field_id' => $form_field_id ) );
+
+    	// If we have an error
+    	if ( $delete == false) {
+
+    		// Add the error to the array
+    		$errors[] = $wpdb->last_error;
+
     	}
 
     	// Return the errors array

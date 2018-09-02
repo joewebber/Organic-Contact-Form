@@ -99,7 +99,13 @@
 									<input type="checkbox" name="field[<?php echo $field->form_field_id; ?>][required]" id="field_<?php echo $field->form_field_id; ?>_required" <?php echo (int) $field->required == 1 ? 'checked="checked"' : ''; ?> value="1">
 
 								</div>
-							
+
+								<div>
+
+									<a href="admin.php?page=organic-contact-form-fields&delete_id=<?php echo $field->form_field_id; ?>">Delete Field</a>
+
+								</div>
+
 							</fieldset>
 
 						</div>
@@ -111,6 +117,61 @@
 						}
 
 					?>
+
+					<div class="new_field">
+
+						<div class="stuffbox">
+
+							<div class="inside">
+
+								<fieldset>
+
+									<div>
+
+										<input type="text" name="field[-1][label]" id="field_label">
+
+									</div>
+
+									<div>
+
+										<label for="">Field Type</label>
+
+										<select name="field[-1][field_type]" id="field_field_type">
+
+											<?php
+
+												// Loop through the field types
+												foreach ( $field_types as $type => $label ) {
+
+											?>
+
+											<option value="<?php echo $type; ?>"><?php echo $label; ?></option>
+
+											<?php
+
+												}
+
+											?>
+
+										</select>
+
+									</div>
+
+									<div>
+
+										<label for="">Required</label>
+
+										<input type="checkbox" name="field[-1][required]" id="field_required" value="1">
+
+									</div>
+
+								</fieldset>
+
+							</div>
+
+						</div>
+
+					</div>
 
 					<button type="reset" class="button button-large">Reset</button>
 
