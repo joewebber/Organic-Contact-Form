@@ -95,8 +95,16 @@ class Organic_Contact_Form_Activator {
 		// Loop through fields
 		foreach ( $fields as $field ) {
 
-			// Insert field (will fail anyway if name exists due to unique key)
-			$wpdb->insert($db_prefix . '_fields', $field);
+			// Try to select this field by name
+			$row_count = $wpdb->get_var( 'SELECT COUNT(*) FROM `' . $db_prefix . '_fields` WHERE `name` = "' . $field['name'] . '"' );
+
+			// If the row doesn't alreay exist, insert it
+			if ( $row_count == 0 ) { 
+
+				// Insert field
+				$wpdb->insert($db_prefix . '_fields', $field);
+
+			}
 
 		}
 
