@@ -191,6 +191,9 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
     		// Get captcha public key
     		$public_key = get_option( $this->parent->option_name . '_captcha_public_key' );
 
+    		// Get text before submit
+    		$text_before_submit = get_option( $this->parent->option_name . '_text_before_submit' );
+
     		// Include the file that generates the html
         	include_once( plugin_dir_path( __FILE__ ) . 'partials/organic-contact-form-form.php' );
 

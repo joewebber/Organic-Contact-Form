@@ -102,7 +102,15 @@ foreach ($fields as $field) {
 	$html .= $tag;
 
 	// Close the containing div
-	$html .= "</div>";
+	$html .= '</div>';
+
+}
+
+// If there is text to show before the submit button
+if ( !empty( $text_before_submit ) ) {
+
+	// Add the text to the html
+	$html .= '<p class="text-before-submit">' . nl2br( $text_before_submit ) . '</p>';
 
 }
 

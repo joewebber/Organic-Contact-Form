@@ -96,50 +96,66 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 	 */
 	public function register_setting() {
 		
-		// Add a General section
+		// Add a Captcha section
 		add_settings_section(
-			$this->parent->option_name . '_general',
-			__( 'General', $this->parent->plugin_name ),
-			array( $this, $this->parent->option_name . '_general_cb' ),
+			$this->parent->option_name . '_captcha',
+			__( 'reCAPTCHA', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_captcha_cb' ),
 			$this->parent->plugin_name
 		);
 
 		// Add captcha public key
 		add_settings_field(
 			$this->parent->option_name . '_captcha_public_key',
-			__( 'Captcha Public Key', $this->parent->plugin_name ),
+			__( 'reCAPTCHA Public Key', $this->parent->plugin_name ),
 			array( $this, $this->parent->option_name . '_captcha_public_key_cb' ),
 			$this->parent->plugin_name,
-			$this->parent->option_name . '_general',
+			$this->parent->option_name . '_captcha',
 			array( 'label_for' => $this->parent->option_name . '_captcha_public_key' )
 		);
 
 		// Register the public captcha key field
-		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_captcha_public_key', 'filter_sanitize_string' );
+		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_captcha_public_key', array(
+	        'sanitize_callback' => 'sanitize_text_field'
+    	) );
 
-		// Add captcha private key
-		add_settings_field(
-			$this->parent->option_name . '__captcha_private_key',
-			__( 'Captcha Private Key', $this->parent->plugin_name ),
-			array( $this, $this->parent->option_name . '_captcha_private_key_cb' ),
-			$this->parent->plugin_name,
-			$this->parent->option_name . '_general',
-			array( 'label_for' => $this->parent->option_name . '_captcha_private_key' )
+		// Add a layout section
+		add_settings_section(
+			$this->parent->option_name . '_layout',
+			__( 'Layout', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_layout_cb' ),
+			$this->parent->plugin_name
 		);
 
-		// Register the private captcha key field
-		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_captcha_private_key', 'filter_sanitize_string' );
+		// Add text before button
+		add_settings_field(
+			$this->parent->option_name . '_text_before_submit',
+			__( 'Text to show before submit button', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_text_before_submit_cb' ),
+			$this->parent->plugin_name,
+			$this->parent->option_name . '_layout',
+			array( 'label_for' => $this->parent->option_name . '_text_before_submit' )
+		);
+
+		// Register the text before button field
+		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_text_before_submit', array(
+	        'sanitize_callback' => 'sanitize_textarea_field'
+    	) );
+
 	}
 
 	/**
-	 * Render the text for the general section
+	 * Render the text for the captcha section
 	 *
 	 * @since  1.0.0
 	 */
-	public function organic_contact_form_general_cb() {
+	public function organic_contact_form_captcha_cb() {
 
-		// Output the text for the general section
-		echo '<p>' . __( 'Update the settings below', $this->parent->plugin_name ) . '</p>';
+		// Output the text for the captcha section
+		echo '<p>' . __( 'Enter the public key for your Google reCAPTCHA. Currently supports <strong>invisible reCAPTCHA v2</strong> (<a href="https://developers.google.com/recaptcha/docs/invisible">learn more</a>)', $this->parent->plugin_name );
+
+		// Output the more info text
+		echo '<p><i>' . __( 'More information on Google Recaptcha is availble <a href="https://www.google.com/recaptcha">here</a></i>', $this->parent->plugin_name );
 
 	}
 
@@ -155,20 +171,34 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
 		// Output the captcha public key field
 		echo '<input type="text" name="' . $this->parent->option_name . '_captcha_public_key' . '" id="' . $this->parent->option_name . '_captcha_public_key' . '" value="' . $value . '">';
+
 	}
 
 	/**
-	 * Render the private captcha key for this plugin
+	 * Render the text for the layout section
 	 *
 	 * @since  1.0.0
 	 */
-	public function organic_contact_form_captcha_private_key_cb() {
+	public function organic_contact_form_layout_cb() {
+
+		// Output the text for the layout section
+		echo '<p>' . __( 'Control elements of the frontend form layout. Fields can be added / edited <a href="admin.php?page=organic-contact-form-fields">here</a>', $this->parent->plugin_name ) . '</p>';
+
+	}
+
+	/**
+	 * Render the text before submit option
+	 *
+	 * @since  1.0.0
+	 */
+	public function organic_contact_form_text_before_submit_cb() {
 
 		// Get the current value
-		$value = get_option( $this->parent->option_name . '_captcha_private_key' );
+		$value = get_option( $this->parent->option_name . '_text_before_submit' );
 
-		// Output the captcha private key field
-		echo '<input type="text" name="' . $this->parent->option_name . '_captcha_private_key' . '" id="' . $this->parent->option_name . '_captcha_private_key' . '" value="' . $value . '">';
+		// Output the field
+		echo '<textarea name="' . $this->parent->option_name . '_text_before_submit' . '" id="' . $this->parent->option_name . '_text_before_submit' . '">' . $value . '</textarea>';
+
 	}
 
 	/**
