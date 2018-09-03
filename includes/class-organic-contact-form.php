@@ -73,7 +73,7 @@ class Organic_Contact_Form {
 	 * @access 	private
 	 * @var  	string 		$option_name 	The option name of this plugin
 	 */
-	protected $option_name = 'organic_contact_form';
+	protected $option_name;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -105,6 +105,9 @@ class Organic_Contact_Form {
 
 		// Set the plugin name
 		$this->plugin_name = 'organic-contact-form';
+
+		// Set the option name
+		$this->option_name = 'organic_contact_form';
 
 		// Set the plugin db prefix
 		$this->db_prefix = $wpdb->prefix . 'organic_contact_form';
@@ -241,21 +244,6 @@ class Organic_Contact_Form {
 
 		// Add shortcode to show the form
 		$this->loader->add_shortcode( 'organic-contact-form', $plugin_public, 'include_form_partial' );
-
-		// Get captcha public key
-    	$public_key = get_option( $this->option_name . '_captcha_public_key' );
-
-		// If we have a public key
-		if ( !empty( $public_key ) ) {
-
-			// Add hook for adding captcha script to <head>
-			add_action( 'wp_head', function() {
-
-				echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
-
-			} );
-
-    	}
 
 	}
 

@@ -135,7 +135,7 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->parent->plugin_name, plugin_dir_url( __FILE__ ) . 'css/public.css', array(), $this->parent->version, 'all' );
+		wp_enqueue_style( $this->parent->plugin_name . '_public-css', plugin_dir_url( __FILE__ ) . 'css/public.css', array(), $this->parent->version, 'all' );
 
 	}
 
@@ -158,7 +158,16 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->parent->plugin_name, plugin_dir_url( __FILE__ ) . 'js/public-min.js', array( 'jquery' ), $this->parent->version, false );
+		wp_enqueue_script( $this->parent->plugin_name . '_public-js', plugin_dir_url( __FILE__ ) . 'js/public-min.js', array( 'jquery' ), $this->parent->version, false );
+
+		// Get captcha public key
+    	$public_key = get_option( $this->parent->option_name . '_captcha_public_key' );
+
+    	if ( !empty( $public_key ) ) {
+
+			wp_enqueue_script( $this->parent->plugin_name . '_recaptcha', 'https://www.google.com/recaptcha/api.js', array(), $this->parent->version, false );
+
+		}
 
 	}
 

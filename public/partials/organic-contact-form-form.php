@@ -106,19 +106,20 @@ foreach ($fields as $field) {
 
 }
 
-// Add the submit button
-$html .= '<button type="submit"';
-
 // If we have a value for the recaptcha public key
 if ( !empty( $public_key ) ) {
 
-	// Add the captcha attributes to the button
-	$html .= ' class="g-recaptcha" data-sitekey="' . $public_key . '" data-callback="onSubmit"';
+	// Add the recaptcha div
+	$html .= ' <div class="g-recaptcha" 
+       data-sitekey="' . $public_key . '"
+       data-size="invisible"
+       data-callback="onSubmit">
+  	</div>';
 
 }
 
-// Close the submit button
-$html .= '>Send Enquiry</button>';
+// Add the submit button
+$html .= '<button type="submit">Send Enquiry</button>';
 
 // Close the form tag
 $html .= '</form>';
