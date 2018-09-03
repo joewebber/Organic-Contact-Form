@@ -1,5 +1,11 @@
+/* Import the global mixins */
 @import '../../global/sass/mixins';
 
+/* Import the variables */
 @import 'variables';
+
+/* Import the form styles */
 @import 'form';
+
+/* Import the message styles */
 @import 'message';

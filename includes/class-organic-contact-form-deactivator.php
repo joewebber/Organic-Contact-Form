@@ -31,6 +31,8 @@ class Organic_Contact_Form_Deactivator {
 	 */
 	public static function deactivate() {
 
+		// Use this for deactivation functionality (currently not required)
+
 	}
 
 }

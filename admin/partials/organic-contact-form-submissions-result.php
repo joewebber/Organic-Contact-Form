@@ -1,3 +1,17 @@
+<?php
+
+/**
+ * The submission result view
+ *
+ * This file is used to markup the HTML for a single submission row in a table
+ *
+ * @link       http://joewebber.co.uk
+ * @since      1.0.0
+ *
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/admin/partials
+ */
+?>
 <tr>
 
 	<td><?php echo date('d/m/Y H:i:s', strtotime( $submission['submission']->created ) ); ?></td>

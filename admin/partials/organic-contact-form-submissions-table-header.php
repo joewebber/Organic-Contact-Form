@@ -1,4 +1,18 @@
-	<thead>
+<?php
+
+/**
+ * The submission table header view
+ *
+ * This file is used to markup the HTML for submission table header
+ *
+ * @link       http://joewebber.co.uk
+ * @since      1.0.0
+ *
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/admin/partials
+ */
+?>
+<thead>
 
 	<tr>
 
@@ -14,4 +28,4 @@
 
 	</tr>
 
-	</thead>
+</thead>

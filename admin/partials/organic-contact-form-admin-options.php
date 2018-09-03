@@ -22,6 +22,7 @@
 	</header>
 
     <form action="options.php" method="post">
+        
         <?php
 
         	// Get the settings fields

@@ -123,18 +123,7 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Organic_Contact_Form_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Organic_Contact_Form_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
+		// Enqueue the public css
 		wp_enqueue_style( $this->parent->plugin_name . '_public-css', plugin_dir_url( __FILE__ ) . 'css/public.css', array(), $this->parent->version, 'all' );
 
 	}
@@ -146,25 +135,16 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 	 */
 	public function enqueue_scripts() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Organic_Contact_Form_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Organic_Contact_Form_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
+		// Enqueue the public js
 		wp_enqueue_script( $this->parent->plugin_name . '_public-js', plugin_dir_url( __FILE__ ) . 'js/public-min.js', array( 'jquery' ), $this->parent->version, false );
 
 		// Get captcha public key
     	$public_key = get_option( $this->parent->option_name . '_captcha_public_key' );
 
+    	// If we have a captcha public key
     	if ( !empty( $public_key ) ) {
 
+    		// Enqueue the Google recaptcha script
 			wp_enqueue_script( $this->parent->plugin_name . '_recaptcha', 'https://www.google.com/recaptcha/api.js', array(), $this->parent->version, false );
 
 		}

@@ -169,6 +169,7 @@ class Organic_Contact_Form {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-organic-contact-form-public.php';
 
+		// Instantiate the loader
 		$this->loader = new Organic_Contact_Form_Loader();
 
 	}
@@ -184,8 +185,10 @@ class Organic_Contact_Form {
 	 */
 	private function set_locale() {
 
+		// Instantiate the language class
 		$plugin_i18n = new Organic_Contact_Form_i18n();
 
+		// Register the langauge functions
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
 	}
@@ -199,9 +202,13 @@ class Organic_Contact_Form {
 	 */
 	private function define_admin_hooks() {
 
+		// Instantiate the admin class
 		$plugin_admin = new Organic_Contact_Form_Admin();
 
+		// Queue the admin styles
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+
+		// Queue the admin scripts
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
 		// Add the options page
@@ -216,6 +223,7 @@ class Organic_Contact_Form {
 		// Get the export task status (if present)
     	$export = ( isset( $_GET['export'] ) ) ? (int) $_GET['export'] : 0;
 
+    	// If we are exporting submissions
     	if ( $export == 1 ) {
 
     		// Register the CSV export function on admin init
@@ -234,9 +242,13 @@ class Organic_Contact_Form {
 	 */
 	private function define_public_hooks() {
 
+		// Instantiate the public class
 		$plugin_public = new Organic_Contact_Form_Public();
 
+		// Queue the public styles
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+
+		// Queue the public scripts
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		// Add shortcode to show the form
@@ -250,48 +262,10 @@ class Organic_Contact_Form {
 	 * @since    1.0.0
 	 */
 	public function run() {
+
+		// Run the loader
 		$this->loader->run();
-	}
 
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    Organic_Contact_Form_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
-
-	/**
-	 * Retrieve the database prefix of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The database prefix of the plugin.
-	 */
-	public function get_db_prefix() {
-		return $this->db_prefix;
 	}
 
 	/**

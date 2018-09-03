@@ -1,3 +1,17 @@
+<?php
+
+/**
+ * The submission table view
+ *
+ * This file is used to markup the HTML for submission table
+ *
+ * @link       http://joewebber.co.uk
+ * @since      1.0.0
+ *
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/admin/partials
+ */
+?>
 <table class="wp-list-table widefat fixed striped posts">
 
 	<?php

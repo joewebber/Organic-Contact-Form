@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Organic Contact Form
  * Plugin URI:        https://github.com/joewebber/organic-contact-form
- * Description:       Simple contact form plugin that can be used to display a contact form on any page.
+ * Description:       Simple contact form plugin that can be used to display a contact form on any page. Use the shortcode [organic-contact-form] to include on a page
  * Version:           1.0.0
  * Author:            Joe Webber
  * Author URI:        http://joewebber.co.uk
@@ -84,7 +84,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-organic-contact-form.php';
  */
 function run_organic_contact_form() {
 
+	// Instantiate the plugin class
 	$plugin = new Organic_Contact_Form();
+
+	// Run the plugin
 	$plugin->run();
 
 }

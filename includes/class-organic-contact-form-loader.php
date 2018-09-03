@@ -57,8 +57,13 @@ class Organic_Contact_Form_Loader {
 	 */
 	public function __construct() {
 
+		// Set the actions
 		$this->actions = array();
+
+		// Set the filters
 		$this->filters = array();
+
+		// Set the shortcodes
 		$this->shortcodes = array();
 
 	}
@@ -74,7 +79,10 @@ class Organic_Contact_Form_Loader {
 	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
 	public function add_action( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
+
+		// Add the specified action
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
+
 	}
 
 	/**
@@ -88,7 +96,10 @@ class Organic_Contact_Form_Loader {
 	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1
 	 */
 	public function add_filter( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
+
+		// Add the specified filter
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
+
 	}
 
 	/**
@@ -100,7 +111,10 @@ class Organic_Contact_Form_Loader {
      * @param     string        $callback       The name of the function that defines the shortcode.
      */
     public function add_shortcode( $tag, $component, $callback) {
+
+    	// Add the specified shortcode
         $this->shortcodes = $this->add( $this->shortcodes, $tag, $component, $callback, 10, 1 );
+
     }
 
 	/**
@@ -119,6 +133,7 @@ class Organic_Contact_Form_Loader {
 	 */
 	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
 
+		// Add the hook to the array
 		$hooks[] = array(
 			'hook'          => $hook,
 			'component'     => $component,
@@ -127,6 +142,7 @@ class Organic_Contact_Form_Loader {
 			'accepted_args' => $accepted_args
 		);
 
+		// Return the hooks
 		return $hooks;
 
 	}
@@ -138,16 +154,28 @@ class Organic_Contact_Form_Loader {
 	 */
 	public function run() {
 
+		// Loop through the filters
 		foreach ( $this->filters as $hook ) {
+
+			// Run the Wordpress command to add the filter
 			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+
 		}
 
+		// Loop through the actions
 		foreach ( $this->actions as $hook ) {
+
+			// Run the Wordpress command to add the hook
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+
 		}
 
+		// Loop through the shortcodes
 		foreach ( $this->shortcodes as $hook ) {
+
+			// Run the Wordpress command to add the hook
             add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ) );
+
         }
 
 	}

@@ -1,5 +1,11 @@
+/* Import the global mixins */
 @import '../../global/sass/mixins';
 
+/* Import the layout styles */
 @import 'layout';
+
+/* Import the pagination styles */
 @import 'pagination';
+
+/* Import the form styles */
 @import 'form';

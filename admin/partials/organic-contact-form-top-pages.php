@@ -1,3 +1,17 @@
+<?php
+
+/**
+ * The top pages view
+ *
+ * This file is used to markup the HTML for top pages on the dashboard
+ *
+ * @link       http://joewebber.co.uk
+ * @since      1.0.0
+ *
+ * @package    Organic_Contact_Form
+ * @subpackage Organic_Contact_Form/admin/partials
+ */
+?>
 <table class="wp-list-table widefat fixed striped posts">
 
 	<thead>

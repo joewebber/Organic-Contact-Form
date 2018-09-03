@@ -1,2 +1,2 @@
 #!/bin/bash
-zip -r --exclude=*.git* --exclude=*admin/sass/* --exclude=*global* --exclude=*node_modules/* --exclude=*public/sass/* --exclude=README.md  --exclude=*package*.json --exclude=Gulpfile.js --exclude=*build/* build/organic-contact-form.zip .
+zip -r --exclude=*.git* --exclude=*admin/sass/* --exclude=*global* --exclude=*node_modules/* --exclude=*public/sass/* --exclude=README.md  --exclude=*package*.json --exclude=Gulpfile.js --exclude=*dist/* dist/organic-contact-form.zip .
