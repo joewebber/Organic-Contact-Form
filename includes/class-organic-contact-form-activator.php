@@ -98,7 +98,7 @@ class Organic_Contact_Form_Activator {
 			// Try to select this field by name
 			$row_count = $wpdb->get_var( 'SELECT COUNT(*) FROM `' . $db_prefix . '_fields` WHERE `name` = "' . $field['name'] . '"' );
 
-			// If the row doesn't alreay exist, insert it
+			// If the row doesn't already exist, insert it
 			if ( $row_count == 0 ) { 
 
 				// Insert field

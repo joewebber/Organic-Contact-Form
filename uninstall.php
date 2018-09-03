@@ -29,3 +29,40 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+// Include plugin definitions
+include_once ( 'definitions.php' );
+
+// If post isset, and the slug matches
+if ( isset( $_POST ) && $_POST['slug'] == ORGANIC_CONTACT_FORM_NAME ) {
+
+	// If admin
+	if ( is_admin() ) {
+
+		// Use the Wordpress database
+		global $wpdb;
+
+		// Set the plugin db prefix
+		$db_prefix = $wpdb->prefix . ORGANIC_CONTACT_FORM_OPTION_NAME;
+
+		// Delete submissions table
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . $db_prefix . '_submissions' );
+
+		// Delete fields table
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . $db_prefix . '_fields' );
+
+		// Delete submissions_fields table
+		$wpdb->query( 'DROP TABLE IF EXISTS ' . $db_prefix . '_submissions_fields' );
+
+		// Remove captcha public key option
+		delete_option( ORGANIC_CONTACT_FORM_OPTION_NAME . '_captcha_public_key' );
+
+		// Remove text before submit option
+		delete_option( ORGANIC_CONTACT_FORM_OPTION_NAME . '_text_before_submit' );
+
+		// Remove submit button text option
+		delete_option( ORGANIC_CONTACT_FORM_OPTION_NAME . '_submit_button_text' );
+
+	}
+
+}
