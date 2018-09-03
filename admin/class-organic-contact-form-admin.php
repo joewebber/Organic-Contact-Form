@@ -281,6 +281,16 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
             9999
         );
 
+        // Add dashboard submenu item
+        add_submenu_page(
+        	'organic-contact-form-dashboard',
+        	__( 'Organic Contact Form Dashboard', $this->parent->plugin_name ),
+        	__( 'Dashboard', $this->parent->plugin_name ),
+            'read',
+            'organic-contact-form-dashboard',
+            array( $this, 'include_dashboard_partial' )
+        );
+
         // Add submissions submenu item
         add_submenu_page(
         	'organic-contact-form-dashboard',
