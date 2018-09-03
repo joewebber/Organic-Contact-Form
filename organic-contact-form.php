@@ -30,20 +30,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-/**
- * Current plugin version.
- */
-define( 'ORGANIC_CONTACT_FORM_VERSION', '1.0.0' );
-
-/**
- * Plugin name.
- */
-define( 'ORGANIC_CONTACT_FORM_NAME', 'organic-contact-form' );
-
-/**
- * Plugin option name (plugin name with dashes converted to underscores)
- */
-define( 'ORGANIC_CONTACT_FORM_OPTION_NAME', str_replace( '-', '_', ORGANIC_CONTACT_FORM_NAME ) );
+// Include plugin definitions
+include_once ( plugin_dir_path( __FILE__ ) . 'definitions.php' );
 
 /**
  * The code that runs during plugin activation.
