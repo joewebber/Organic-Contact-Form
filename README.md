@@ -1,9 +1,9 @@
 Organic Contact Form
 ====================
-Tested up to: 4.9.8
-Stable tag: master
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tested up to: 4.9.8  
+Stable tag: master  
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
 Simple contact form plugin that can be used to display a contact form on any page. Use the shortcode [organic-contact-form] to include on a page.
 
