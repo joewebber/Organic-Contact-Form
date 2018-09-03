@@ -18,7 +18,7 @@
 
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-		<p>the dashboard shows the latest five submissions, along with some statistics</p>
+		<p>The dashboard shows the latest five submissions, along with some statistics</p>
 
 		<p>To include the contact form on a page, use the shortcode: [organic-contact-form]</p>
 
