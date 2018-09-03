@@ -97,27 +97,17 @@ class Organic_Contact_Form {
 		// Use the Wordpress database global (required to get database prefix)
 		global $wpdb;
 
-		// If the plugin version is defined
-		if ( defined( 'ORGANIC_CONTACT_FORM_VERSION' ) ) {
-
-			// Set the variable to the defined version
-			$this->version = ORGANIC_CONTACT_FORM_VERSION;
-
-		} else { // Else not defined
-
-			// Set version to 1.0.0
-			$this->version = '1.0.0';
-
-		}
+		// Set the variable to the defined version
+		$this->version = ORGANIC_CONTACT_FORM_VERSION;
 
 		// Set the plugin name
-		$this->plugin_name = 'organic-contact-form';
+		$this->plugin_name = ORGANIC_CONTACT_FORM_NAME;
 
 		// Set the option name
-		$this->option_name = 'organic_contact_form';
+		$this->option_name = ORGANIC_CONTACT_FORM_OPTION_NAME;
 
 		// Set the plugin db prefix
-		$this->db_prefix = $wpdb->prefix . 'organic_contact_form';
+		$this->db_prefix = $wpdb->prefix . $this->option_name;
 
 		// If we are running the setup methods
 		if ( $run ) {

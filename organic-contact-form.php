@@ -31,32 +31,53 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
+ * Current plugin version.
  */
 define( 'ORGANIC_CONTACT_FORM_VERSION', '1.0.0' );
+
+/**
+ * Plugin name.
+ */
+define( 'ORGANIC_CONTACT_FORM_NAME', 'organic-contact-form' );
+
+/**
+ * Plugin option name (plugin name with dashes converted to underscores)
+ */
+define( 'ORGANIC_CONTACT_FORM_OPTION_NAME', str_replace( '-', '_', ORGANIC_CONTACT_FORM_NAME ) );
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-organic-contact-form-activator.php
  */
-function activate_jw_contact_form() {
+function activate_organic_contact_form() {
+
+	// Require the activator class file
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-organic-contact-form-activator.php';
+
+	// Run the plugin activation method
 	Organic_Contact_Form_Activator::activate();
+
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-organic-contact-form-deactivator.php
  */
-function deactivate_jw_contact_form() {
+function deactivate_organic_contact_form() {
+
+	// Require the deactivator class file
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-organic-contact-form-deactivator.php';
+
+	// Run the plugin deactivation method
 	Organic_Contact_Form_Deactivator::deactivate();
+
 }
 
-register_activation_hook( __FILE__, 'activate_jw_contact_form' );
-register_deactivation_hook( __FILE__, 'deactivate_jw_contact_form' );
+// Register activation hook
+register_activation_hook( __FILE__, 'activate_organic_contact_form' );
+
+// Register deactivation hook
+register_deactivation_hook( __FILE__, 'deactivate_organic_contact_form' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -79,4 +100,6 @@ function run_organic_contact_form() {
 	$plugin->run();
 
 }
+
+// Run the plugin
 run_organic_contact_form();

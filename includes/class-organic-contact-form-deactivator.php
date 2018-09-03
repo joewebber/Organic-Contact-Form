@@ -23,9 +23,9 @@
 class Organic_Contact_Form_Deactivator {
 
 	/**
-	 * Short Description. (use period)
+	 * Run when plugin is deactivated.
 	 *
-	 * Long Description.
+	 *
 	 *
 	 * @since    1.0.0
 	 */
