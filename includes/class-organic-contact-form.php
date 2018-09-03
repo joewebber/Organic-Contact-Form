@@ -76,6 +76,13 @@ class Organic_Contact_Form {
 	protected $option_name;
 
 	/**
+	 * Default submit button text
+	 *
+	 * @since  	1.0.0
+	 */
+	const SUBMIT_BUTTON_TEXT = 'Send Enquiry';
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.

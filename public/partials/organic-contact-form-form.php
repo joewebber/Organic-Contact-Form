@@ -126,8 +126,8 @@ if ( !empty( $public_key ) ) {
 
 }
 
-// Add the submit button
-$html .= '<button type="submit">Send Enquiry</button>';
+// Add the submit button, with the user defined text
+$html .= '<button type="submit">' . $submit_button_text . '</button>';
 
 // Close the form tag
 $html .= '</form>';

@@ -104,7 +104,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 			$this->parent->plugin_name
 		);
 
-		// Add captcha public key
+		// Add captcha public key option
 		add_settings_field(
 			$this->parent->option_name . '_captcha_public_key',
 			__( 'reCAPTCHA Public Key', $this->parent->plugin_name ),
@@ -127,7 +127,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 			$this->parent->plugin_name
 		);
 
-		// Add text before button
+		// Add text before button option
 		add_settings_field(
 			$this->parent->option_name . '_text_before_submit',
 			__( 'Text to show before submit button', $this->parent->plugin_name ),
@@ -142,6 +142,21 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 	        'sanitize_callback' => 'sanitize_textarea_field'
     	) );
 
+    	// Add submit button text option
+		add_settings_field(
+			$this->parent->option_name . '_submit_button_text',
+			__( 'Text for the submit button', $this->parent->plugin_name ),
+			array( $this, $this->parent->option_name . '_submit_button_text_cb' ),
+			$this->parent->plugin_name,
+			$this->parent->option_name . '_layout',
+			array( 'label_for' => $this->parent->option_name . '_submit_button_text' )
+		);
+
+		// Register the submit button text field
+		register_setting( $this->parent->plugin_name, $this->parent->option_name . '_submit_button_text', array(
+	        'sanitize_callback' => 'sanitize_text_field'
+    	) );
+
 	}
 
 	/**
@@ -152,7 +167,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 	public function organic_contact_form_captcha_cb() {
 
 		// Output the text for the captcha section
-		echo '<p>' . __( 'Enter the public key for your Google reCAPTCHA. Currently supports <strong>invisible reCAPTCHA v2</strong> (<a href="https://developers.google.com/recaptcha/docs/invisible">learn more</a>)', $this->parent->plugin_name );
+		echo '<p>' . __( 'Enter your public key to enable Google reCAPTCHA. Currently supports <strong>invisible reCAPTCHA v2</strong> (<a href="https://developers.google.com/recaptcha/docs/invisible">learn more</a>)', $this->parent->plugin_name );
 
 		// Output the more info text
 		echo '<p><i>' . __( 'More information on Google Recaptcha is availble <a href="https://www.google.com/recaptcha">here</a></i>', $this->parent->plugin_name );
@@ -198,6 +213,21 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
 		// Output the field
 		echo '<textarea name="' . $this->parent->option_name . '_text_before_submit' . '" id="' . $this->parent->option_name . '_text_before_submit' . '">' . $value . '</textarea>';
+
+	}
+
+	/**
+	 * Render the submit button text option
+	 *
+	 * @since  1.0.0
+	 */
+	public function organic_contact_form_submit_button_text_cb() {
+
+		// Get the current value
+		$value = get_option( $this->parent->option_name . '_submit_button_text', $this->parent::SUBMIT_BUTTON_TEXT );
+
+		// Output the field
+		echo '<input type="text" name="' . $this->parent->option_name . '_submit_button_text' . '" id="' . $this->parent->option_name . '_submit_button_text' . '" value="' . $value . '">';
 
 	}
 
