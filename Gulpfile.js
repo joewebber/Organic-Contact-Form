@@ -29,7 +29,7 @@ gulp.task('admin-sass', function() {
 });
 
 // Gulp task for public styles
-gulp.task('public', function() {
+gulp.task('public-sass', function() {
     gulp.src('public/sass/*.scss')
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(gulp.dest('./public/css/'));
@@ -39,15 +39,15 @@ gulp.task('public', function() {
 gulp.task('default',function() {
 
 	// Watch admin files for sass changes
-    gulp.watch('admin/sass/*.scss', ['admin-sass']);
+    gulp.watch('admin/sass/*.scss', gulp.series('admin-sass'));
 
     // Watch public files for sass changes
-    gulp.watch('public/sass/*.scss', ['public-sass']);
+    gulp.watch('public/sass/*.scss', gulp.series('public-sass'));
 
     // Watch admin files for js changes
-    gulp.watch('admin/js/*.js', ['minify-admin-js']);
+    gulp.watch('admin/js/*.js', gulp.series('minify-admin-js'));
 
     // Watch public files for js changes
-    gulp.watch('public/js/*.js', ['minify-public-js']);
+    gulp.watch('public/js/*.js', gulp.series('minify-public-js'));
 
 });
