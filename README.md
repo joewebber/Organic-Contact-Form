@@ -20,6 +20,16 @@ This section describes how to install the plugin and get it working.
 1. Upload `organic-contact-form.zip` from the `dist` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
+Demo
+----
+
+A demo of the plugin can be found at: http://ocf.joewebber.co.uk/contact-us/
+You can access the admin side at: http://ocf.joewebber.co.uk/wp-admin
+
+`Username: demo`
+
+`Password: demo`
+
 Frequently Asked Questions
 --------------------------
 
