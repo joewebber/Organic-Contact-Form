@@ -644,36 +644,41 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
     		// Sanitize the label using preg_replace to strip anything not alphanumeric or spaces
     		$values['label'] = trim( preg_replace( "/[^a-zA-Z0-9 ]+/", "",  $values['label'] ) );
 
-    		// Set the name (Use Wordpress sanitize_title_with_dashes to allow only alphanumeric and dashes)
-    		$values['name'] = sanitize_title_with_dashes( $values['label'] );
+    		// If we have a value for the label
+    		if ( !empty( $values['label'] ) ) {
+ 
+	    		// Set the name (Use Wordpress sanitize_title_with_dashes to allow only alphanumeric and dashes)
+	    		$values['name'] = sanitize_title_with_dashes( $values['label'] );
 
-    		// Validate the field type
-    		if ( !$this->validate_field_type( $values['field_type'] ) ) {
+	    		// Validate the field type
+	    		if ( !$this->validate_field_type( $values['field_type'] ) ) {
 
-    			$errors[] = '"Field Type" must be one of the following:<br>' . implode( '<br>', $this->get_field_types() );
+	    			$errors[] = '"Field Type" must be one of the following:<br>' . implode( '<br>', $this->get_field_types() );
 
-    		}
+	    		}
 
-    		// Sanitize the required field (convert to int)
-    		$values['required'] = (int) $values['required'];
+	    		// Sanitize the required field (convert to int)
+	    		$values['required'] = (int) $values['required'];
 
-    		// If we have no errors
-    		if ( empty( $errors ) ) {
+	    		// If we have no errors
+	    		if ( empty( $errors ) ) {
 
-    			// If we have an existing field
-    			if ( (int) $form_field_id > 0) {
+	    			// If we have an existing field
+	    			if ( (int) $form_field_id > 0) {
 
-    				// Update the values in the database
-    				$wpdb->update($this->parent->db_prefix . '_fields', $values, array( 'form_field_id' => $form_field_id ) );
+	    				// Update the values in the database
+	    				$wpdb->update($this->parent->db_prefix . '_fields', $values, array( 'form_field_id' => $form_field_id ) );
 
-    			} else { // Else we have a new field
+	    			} else { // Else we have a new field
 
-    				// Insert the values into the database
-    				$wpdb->insert($this->parent->db_prefix . '_fields', $values );
+	    				// Insert the values into the database
+	    				$wpdb->insert($this->parent->db_prefix . '_fields', $values );
 
-    			}
+	    			}
 
-    		}
+	    		}
+
+	    	}
     		
     	}
 
