@@ -746,6 +746,14 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 
 	    			}
 
+	    			// If we have a wpdb error, add to errors
+	    			if ( $wpdb->last_error ) {
+
+	    				// Add to errors
+	    				$errors[] = 'Database error: ' . $wpdb->last_error;
+
+	    			}
+
 	    		}
 
 	    	}
@@ -781,7 +789,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
     	if ( $delete == false) {
 
     		// Add the error to the array
-    		$errors[] = $wpdb->last_error;
+    		$errors[] = 'Database error: ' . $wpdb->last_error;
 
     	}
 
