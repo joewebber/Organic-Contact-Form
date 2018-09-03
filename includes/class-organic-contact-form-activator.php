@@ -59,6 +59,24 @@ class Organic_Contact_Form_Activator {
 			UNIQUE INDEX `name` (`name`)
 		)';
 
+		// SQL to create the submissions_fields table
+		$sql[] = 'CREATE TABLE IF NOT EXISTS `' . $db_prefix . '_submissions_fields` (
+			`submission_id` INT(10) UNSIGNED NOT NULL,
+			`form_field_id` INT(10) UNSIGNED NOT NULL,
+			`value` TEXT NOT NULL
+		)';
+
+		// Require the Wordpress upgrade file
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+		// Loop through the queries
+		foreach ( $sql as $query ) {
+
+			// Run the query to create table
+			dbDelta( $query );
+
+		}
+
 		// Array of fields
 		$fields = array(
 
@@ -105,24 +123,6 @@ class Organic_Contact_Form_Activator {
 				$wpdb->insert($db_prefix . '_fields', $field);
 
 			}
-
-		}
-
-		// SQL to create the submissions_fields table
-		$sql[] = 'CREATE TABLE IF NOT EXISTS `' . $db_prefix . '_submissions_fields` (
-			`submission_id` INT(10) UNSIGNED NOT NULL,
-			`form_field_id` INT(10) UNSIGNED NOT NULL,
-			`value` TEXT NOT NULL
-		)';
-
-		// Require the Wordpress upgrade file
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
-		// Loop through the queries
-		foreach ( $sql as $query ) {
-
-			// Run the query to create table
-			dbDelta( $query );
 
 		}
 
