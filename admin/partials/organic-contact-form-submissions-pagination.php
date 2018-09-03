@@ -8,7 +8,7 @@
 
 			<option value="-1">Bulk Actions</option>
 
-			<option value="export_all_records">Export All Records</option>
+			<option value="export_all_records">Export All Submissions</option>
 
 		</select>
 

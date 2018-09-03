@@ -185,7 +185,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 		$value = get_option( $this->parent->option_name . '_captcha_public_key' );
 
 		// Output the captcha public key field
-		echo '<input type="text" name="' . $this->parent->option_name . '_captcha_public_key' . '" id="' . $this->parent->option_name . '_captcha_public_key' . '" value="' . $value . '">';
+		echo '<input type="text" name="' . $this->parent->option_name . '_captcha_public_key' . '" id="' . $this->parent->option_name . '_captcha_public_key' . '" value="' . $value . '" class="regular-text">';
 
 	}
 
@@ -212,7 +212,7 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 		$value = get_option( $this->parent->option_name . '_text_before_submit' );
 
 		// Output the field
-		echo '<textarea name="' . $this->parent->option_name . '_text_before_submit' . '" id="' . $this->parent->option_name . '_text_before_submit' . '">' . $value . '</textarea>';
+		echo '<textarea rows="10" cols="50" name="' . $this->parent->option_name . '_text_before_submit' . '" id="' . $this->parent->option_name . '_text_before_submit' . '" class="large-text">' . $value . '</textarea>';
 
 	}
 
