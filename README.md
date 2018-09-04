@@ -23,7 +23,7 @@ This section describes how to install the plugin and get it working.
 Demo
 ----
 
-A demo of the plugin can be found at: http://ocf.joewebber.co.uk/contact-us/
+A demo of the plugin can be found at: http://ocf.joewebber.co.uk/contact-us/  
 You can access the admin side at: http://ocf.joewebber.co.uk/wp-admin
 
 `Username: demo`
