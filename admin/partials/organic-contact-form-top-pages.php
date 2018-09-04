@@ -37,7 +37,7 @@
 
 		<tr>
 
-			<td><a href="<?php echo $top_page->url; ?>"><?php echo $top_page->url; ?></a></td>
+			<td><a href="<?php echo site_url() . '?page_id=' . $top_page->page_id; ?>"><?php echo get_the_title( $top_page->page_id ); ?></a></td>
 
 			<td><?php echo $top_page->total_submissions; ?></td>
 

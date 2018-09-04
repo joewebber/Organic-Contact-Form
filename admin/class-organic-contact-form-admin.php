@@ -598,8 +598,8 @@ class Organic_Contact_Form_Admin extends Organic_Contact_Form {
 		global $wpdb;
 
 		// Structure the query to get the pages
-		$sql = "SELECT COUNT(*) AS total_submissions, url FROM " . $this->parent->db_prefix . "_submissions
-		GROUP BY url
+		$sql = "SELECT COUNT(*) AS total_submissions, url, page_id FROM " . $this->parent->db_prefix . "_submissions
+		GROUP BY page_id
 		LIMIT 5";
 
 		// Run the query to get the pages

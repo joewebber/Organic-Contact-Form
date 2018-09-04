@@ -258,7 +258,8 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 		$wpdb->insert( $this->parent->db_prefix . '_submissions',
 			array(
 				'created' 	=> date( 'Y-m-d H:i:s' ),
-				'url' 		=> home_url( add_query_arg( $_GET, $wp->request ) )
+				'url' 		=> home_url( add_query_arg( $_GET, $wp->request ) ),
+				'page_id'	=> get_the_ID()
 			)
 		);
 

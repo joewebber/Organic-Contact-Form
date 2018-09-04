@@ -57,13 +57,13 @@
 
 										<td class="first">
 
-											<strong>URL:</strong>
+											<strong>Page:</strong>
 
 										</td>
 
 										<td>
 
-											<a href="<?php echo $submission['submission']->url; ?>"><?php echo $submission['submission']->url; ?></a>
+											<a href="<?php echo site_url() . '?page_id=' . $submission['submission']->page_id; ?>"><?php echo get_the_title( $submission['submission']->page_id ); ?></a>
 
 										</td>
 

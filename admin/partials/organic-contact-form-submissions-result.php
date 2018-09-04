@@ -16,7 +16,7 @@
 
 	<td><?php echo date('d/m/Y H:i:s', strtotime( $submission['submission']->created ) ); ?></td>
 
-	<td><a href="<?php echo $submission['submission']->url; ?>"><?php echo $submission['submission']->url; ?></a></td>
+	<td><a href="<?php echo site_url() . '?page_id=' . $submission['submission']->page_id; ?>"><?php echo get_the_title( $submission['submission']->page_id ); ?></a></td>
 
 	<td><?php echo $submission['submission_fields'][0]->value; ?></td>
 

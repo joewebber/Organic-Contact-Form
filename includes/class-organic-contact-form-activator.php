@@ -45,6 +45,7 @@ class Organic_Contact_Form_Activator {
 			`submission_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 			`created` DATETIME NOT NULL,
 			`url` VARCHAR(200) NOT NULL,
+			`page_id` INT(10) UNSIGNED NOT NULL,
 			PRIMARY KEY (`submission_id`)
 		)';
 
