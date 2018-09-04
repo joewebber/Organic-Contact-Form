@@ -16,7 +16,7 @@
 
 	<tr>
 
-		<th scope="col" id="date" class="manage-column column-date column-primary"><span>Date</span></th>
+		<th scope="col" id="date" class="manage-column column--date column-primary"><span>Date</span></th>
 
 		<th scope="col" id="page" class="manage-column column-page"><span>Page</span></th>
 

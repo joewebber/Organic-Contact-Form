@@ -18,7 +18,7 @@
 
 	<tr>
 
-		<th scope="col" id="date" class="manage-column column-date column-primary"><span>Day</span></th>
+		<th scope="col" id="date" class="manage-column column--date column-primary"><span>Day</span></th>
 
 		<th scope="col" id="total_submissions" class="manage-column column-total_submissions"><span>Total Submissions</span></td>
 
