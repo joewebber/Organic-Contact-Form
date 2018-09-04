@@ -1,3 +1,4 @@
+// Use strict
 'use strict';
 
 // Require gulp
@@ -9,66 +10,52 @@ var sass = require('gulp-sass');
 // Require minify
 var minify = require('gulp-minify');
 
-// Gulp task to minify admin js
-gulp.task('minify-admin-js', function(done) {
-  gulp.src(['admin/js/*.js'])
-    .pipe(minify({ignoreFiles: ['*-min.js']}))
-    .pipe(gulp.dest('./admin/js/'));
+// Gulp task to minify js
+gulp.task('minify-js', function() {
+
+    // Set the source, options and output destination for admin
+    gulp.src(['admin/js/*.js', '!admin/js/*-min.js'])
+        .pipe(minify({ignoreFiles: ['admin/js/*-min.js']}))
+        .pipe(gulp.dest('./admin/js/'));
+
+    // Set the source, options and output destination for public
+    gulp.src(['public/js/*.js', '!public/js/*-min.js'])
+        .pipe(minify({ignoreFiles: ['*-min.js']}))
+        .pipe(gulp.dest('./public/js/'));
 
     // Run the callback function
-    done();
+    //done();
 
 });
 
-// Gulp task to minify public js
-gulp.task('minify-public-js', function(done) {
-  gulp.src(['public/js/*.js'])
-    .pipe(minify({ignoreFiles: ['*-min.js']}))
-    .pipe(gulp.dest('./public/js/'));
+// Gulp task to compile sass
+gulp.task('compile-sass', function() {
 
-    // Run the callback function
-    done();
-
-});
-
-// Gulp task for admin styles
-gulp.task('admin-sass', function(done) {
+    // Set the source, options and output destination for admin
     gulp.src('admin/sass/*.scss')
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(gulp.dest('./admin/css/'));
-        
-    // Run the callback function
-    done();
 
-});
-
-// Gulp task for public styles
-gulp.task('public-sass', function(done) {
+    // Set the source, options and output destination for public
     gulp.src('public/sass/*.scss')
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(gulp.dest('./public/css/'));
-
+        
     // Run the callback function
-    done();
+    //done();
 
 });
 
 // Watch for changes to files
-gulp.task('default',function(done) {
+gulp.task('default', function() {
 
-	// Watch admin files for sass changes
-    gulp.watch('admin/sass/*.scss', gulp.series('admin-sass'));
+	// Watch sass files for changes
+    gulp.watch(['admin/sass/*.scss', 'public/sass/*.scss'], ['compile-sass']);
 
-    // Watch public files for sass changes
-    gulp.watch('public/sass/*.scss', gulp.series('public-sass'));
-
-    // Watch admin files for js changes
-    gulp.watch('admin/js/*.js', gulp.series('minify-admin-js'));
-
-    // Watch public files for js changes
-    gulp.watch('public/js/*.js', gulp.series('minify-public-js'));
+    // Watch files for js changes (ignore files ending '-min.js')
+    gulp.watch(['admin/js/*.js', 'public/js/*.js', '!admin/js/*-min.js', '!public/js/*-min.js'], ['minify-js']);
 
     // Run the callback function
-    done();
+    //    done();
 
 });
