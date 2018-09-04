@@ -41,6 +41,15 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 	private $errors;
 
 	/**
+	 * The data
+	 *
+	 * @since    1.0.0
+	 * @access   public
+	 * @var     array    $data    The data being posted.
+	 */
+	public $data;
+
+	/**
 	 * Show Form
 	 *
 	 * @since    1.0.0
@@ -101,8 +110,8 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 			// If we have no errors
 			if ( empty( $this->errors ) ) {
 
-				// Save the submission
-				$this->save_submission( $_POST['organic_form_fields'] );
+				// Set the data (the parent class calls the 'save_submission' method, as it needs to be added to the loader, in order to make use of the $wp global)
+				$this->data = $_POST['organic_form_fields'];
 
 				// Set the form to be hidden
 				$this->show_form = false;
@@ -233,10 +242,11 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
      *
      * Stores the data into the database
      *
-	 * @since    1.0.0
+	 * @since   1.0.0
+	 * @access 	public
 	 * @param   $data array An array of the form data
      */
-    private function save_submission( $data ) {
+    public function save_submission() {
 
     	// Use the Wordpress database global
 		global $wpdb;
@@ -256,7 +266,7 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
 		$submission_id = $wpdb->insert_id;
 
 		// Loop through the form data
-		foreach( $data as $form_field_id => $value ) {
+		foreach( $this->data as $form_field_id => $value ) {
 
 			// Save the field / value
 			$wpdb->insert( $this->parent->db_prefix . '_submissions_fields',

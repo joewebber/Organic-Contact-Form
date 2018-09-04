@@ -70,7 +70,7 @@ class Organic_Contact_Form {
 	 * The options name to be used in this plugin
 	 *
 	 * @since  	1.0.0
-	 * @access 	private
+	 * @access 	protected
 	 * @var  	string 		$option_name 	The option name of this plugin
 	 */
 	protected $option_name;
@@ -253,6 +253,14 @@ class Organic_Contact_Form {
 
 		// Add shortcode to show the form
 		$this->loader->add_shortcode( 'organic-contact-form', $plugin_public, 'include_form_partial' );
+
+		// If the data has been posted from the frontend form
+		if ( !empty( $plugin_public->data ) ) {
+
+			// Call the 'save_submission' method in Organic_Contact_Form_Public to store the data
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'save_submission' );
+
+		}
 
 	}
 
