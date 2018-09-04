@@ -18,7 +18,7 @@
 
 	<tr>
 
-		<th scope="col" id="url" class="manage-column column-url column-primary"><span>URL</span></th>
+		<th scope="col" id="url" class="manage-column column-url column-primary"><span>Page</span></th>
 
 		<th scope="col" id="total_submissions" class="manage-column column-total_submissions"><span>Total Submissions</span></td>
 
