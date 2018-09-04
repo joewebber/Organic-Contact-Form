@@ -7,6 +7,13 @@
 		background-size: 150px;
 		min-height: 50px;
 
+		@include breakpoint-small {
+
+			padding-top: 50px;
+			background-position-x: left;
+
+		}
+
 	}
 
 	.postbox-container {
