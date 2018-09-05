@@ -178,10 +178,10 @@ class Organic_Contact_Form_Public extends Organic_Contact_Form {
     	if ( $this->show_form ) {
 
     		// Get captcha public key
-    		$public_key = get_option( $this->parent->option_name . '_captcha_public_key' );
+    		$public_key = get_option( $this->parent->option_name . '_captcha_public_key', '' );
 
     		// Get text before submit
-    		$text_before_submit = get_option( $this->parent->option_name . '_text_before_submit' );
+    		$text_before_submit = get_option( $this->parent->option_name . '_text_before_submit', '' );
 
     		// Get the submit button text
     		$submit_button_text = get_option( $this->parent->option_name . '_submit_button_text', $this->parent::SUBMIT_BUTTON_TEXT );
